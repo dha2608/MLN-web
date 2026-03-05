@@ -81,7 +81,7 @@ export const PHILOSOPHERS = {
     era: 'Cổ đại',
     school: 'Triết học Hy Lạp cổ đại',
     summary: 'Aristotle (384–322 TCN) là học trò của Plato và sau này trở thành thầy dạy của Alexander Đại đế. Ông được coi là "cha đẻ" của nhiều lĩnh vực: logic học, sinh học, vật lý học, siêu hình học và khoa học chính trị. Khác với Plato, Aristotle coi trọng quan sát thực nghiệm và tin rằng tri thức bắt đầu từ kinh nghiệm giác quan. Ông sáng lập trường Lyceum tại Athens và để lại một hệ thống triết học đồ sộ bao quát hầu hết mọi lĩnh vực tri thức thời cổ đại. Ảnh hưởng của Aristotle kéo dài suốt hơn 2.000 năm, từ triết học Hồi giáo trung cổ đến thần học Kitô giáo và nền tảng khoa học hiện đại.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/440px-Aristotle_Altemps_Inv8575.jpg',
+    imageUrl: 'https://imgs.search.brave.com/IC56IzRbok0aVwogIsr8t23OgVE8YGryfMe40eLT__A/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9j/L2MyLyhWZW5pY2Up/X0FyaXN0b3RlbGVf/YnlfRnJhbmNlc2Nv/X0hheWV6X2luX2dh/bGxlcmllX0FjY2Fk/ZW1pYV9WZW5pY2Uu/anBn',
     imageAlt: 'Tượng bán thân Aristotle, bản sao La Mã theo nguyên bản Hy Lạp của Lysippos',
     imageCaption: 'Tượng bán thân Aristotle – bản sao La Mã theo nguyên bản của Lysippos, Palazzo Altemps',
     imageSource: 'Wikimedia Commons — Public Domain',
