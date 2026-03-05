@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import QuizResult from '../models/QuizResult.js';
+import { optionalAuth } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -142,7 +144,7 @@ router.get('/questions', (req, res) => {
   res.json({ questions: QUIZ_QUESTIONS });
 });
 
-router.post('/submit', (req, res) => {
+router.post('/submit', optionalAuth, async (req, res) => {
   const { answers } = req.body; // { "1": "a", "2": "c", "3": "a" }
   if (!answers || typeof answers !== 'object') {
     return res.status(400).json({ error: 'answers required' });
@@ -160,6 +162,16 @@ router.post('/submit', (req, res) => {
     score: counts,
     description: top ? SCHOOL_DESCRIPTIONS[top[0]] || 'Bạn có sự pha trộn nhiều trường phái.' : 'Hãy thử lại với đầy đủ câu trả lời.'
   };
+
+  // Save quiz result to DB
+  try {
+    await QuizResult.create({
+      user: req.user?._id || null,
+      primarySchool: result.primarySchool,
+      score: counts,
+    });
+  } catch { /* non-blocking */ }
+
   res.json(result);
 });
 

@@ -3,6 +3,7 @@ import ChatMessage from '../models/ChatMessage.js';
 import User from '../models/User.js';
 import Philosopher from '../models/Philosopher.js';
 import Concept from '../models/Concept.js';
+import QuizResult from '../models/QuizResult.js';
 import { PHILOSOPHERS, SCHOOLS_DETAIL, TIMELINE } from '../data/philosophyKnowledge.js';
 
 const router = Router();
@@ -161,6 +162,90 @@ router.get('/recent-activity', async (req, res) => {
         topic: m.topicDetected,
         createdAt: m.createdAt,
       })),
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Quiz result distribution ---
+router.get('/quiz-distribution', async (req, res) => {
+  try {
+    const [distribution, totalQuizzes] = await Promise.all([
+      QuizResult.aggregate([
+        { $group: { _id: '$primarySchool', count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ]),
+      QuizResult.countDocuments()
+    ]);
+    res.json({
+      totalQuizzes,
+      distribution: distribution.map(d => ({
+        school: d._id,
+        count: d.count,
+        percent: totalQuizzes > 0 ? Math.round((d.count / totalQuizzes) * 100) : 0,
+      }))
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Chat activity over time (last 30 days) ---
+router.get('/chat-activity', async (req, res) => {
+  try {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const activity = await ChatMessage.aggregate([
+      { $match: { role: 'user', createdAt: { $gte: thirtyDaysAgo } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+    res.json({
+      activity: activity.map(a => ({ date: a._id, count: a.count }))
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- User engagement stats ---
+router.get('/engagement', async (req, res) => {
+  try {
+    const [
+      totalUsers,
+      activeToday,
+      activeWeek,
+      avgVisits,
+      topChatters
+    ] = await Promise.all([
+      User.countDocuments(),
+      User.countDocuments({ lastLoginAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } }),
+      User.countDocuments({ lastLoginAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } }),
+      User.aggregate([{ $group: { _id: null, avg: { $avg: '$visitCount' } } }]).then(r => Math.round(r[0]?.avg || 0)),
+      ChatMessage.aggregate([
+        { $match: { role: 'user' } },
+        { $group: { _id: '$user', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 5 },
+        { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'userInfo' } },
+        { $unwind: { path: '$userInfo', preserveNullAndEmptyArrays: true } },
+        { $project: { name: '$userInfo.name', avatar: '$userInfo.avatar', count: 1 } }
+      ])
+    ]);
+
+    res.json({
+      totalUsers,
+      activeToday,
+      activeWeek,
+      avgVisits,
+      topChatters: topChatters.map(c => ({ name: c.name || 'Ẩn danh', avatar: c.avatar || '', count: c.count })),
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

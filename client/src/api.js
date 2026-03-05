@@ -88,12 +88,15 @@ export const quiz = {
 
 export const stats = {
   overview: () => fetch(`${API}/stats/overview`, fetchOptions()).then(r => r.json()),
-  schoolDistribution: () => fetch(`${API}/stats/school-distribution`, fetchOptions()).then(r => r.json()),
-  eraDistribution: () => fetch(`${API}/stats/era-distribution`, fetchOptions()).then(r => r.json()),
-  philosopherRichness: () => fetch(`${API}/stats/philosopher-richness`, fetchOptions()).then(r => r.json()),
+  engagement: () => fetch(`${API}/stats/engagement`, fetchOptions()).then(r => r.json()),
+  quizDistribution: () => fetch(`${API}/stats/quiz-distribution`, fetchOptions()).then(r => r.json()),
+  chatActivity: () => fetch(`${API}/stats/chat-activity`, fetchOptions()).then(r => r.json()),
   topPhilosophers: () => fetch(`${API}/stats/top-philosophers`, fetchOptions()).then(r => r.json()),
   hotQuestions: () => fetch(`${API}/stats/hot-questions`, fetchOptions()).then(r => r.json()),
   recentActivity: () => fetch(`${API}/stats/recent-activity`, fetchOptions()).then(r => r.json()),
+  schoolDistribution: () => fetch(`${API}/stats/school-distribution`, fetchOptions()).then(r => r.json()),
+  eraDistribution: () => fetch(`${API}/stats/era-distribution`, fetchOptions()).then(r => r.json()),
+  philosopherRichness: () => fetch(`${API}/stats/philosopher-richness`, fetchOptions()).then(r => r.json()),
 };
 
 export const schools = {
