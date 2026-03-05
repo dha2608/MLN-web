@@ -46,21 +46,21 @@ export default function Stats() {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <span className="stat-card-value">{overview.totalUsers ?? 0}</span>
-            <span className="stat-card-label">Nguoi dung</span>
+            <span className="stat-card-label">Người dùng</span>
           </div>
           <div className="stat-card">
             <div className="stat-card-icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5"/></svg>
             </div>
             <span className="stat-card-value">{overview.totalQuestions ?? 0}</span>
-            <span className="stat-card-label">Cau hoi da dat</span>
+            <span className="stat-card-label">Câu hỏi đã đặt</span>
           </div>
           <div className="stat-card">
             <div className="stat-card-icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
             </div>
             <span className="stat-card-value">{overview.totalSessions ?? 0}</span>
-            <span className="stat-card-label">Phien truy cap</span>
+            <span className="stat-card-label">Phiên truy cập</span>
           </div>
         </div>
       )}

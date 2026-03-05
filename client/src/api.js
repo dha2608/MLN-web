@@ -2,8 +2,31 @@ const API = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : '/api';
 
+// --- Token management ---
+const TOKEN_KEY = 'philosophy_token';
+
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function setToken(token) {
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+export function removeToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
+// --- Fetch helpers ---
 const fetchOptions = (method = 'GET', body) => {
-  const opts = { method, credentials: 'include', headers: {} };
+  const token = getToken();
+  const opts = {
+    method,
+    headers: {}
+  };
+  if (token) {
+    opts.headers['Authorization'] = `Bearer ${token}`;
+  }
   if (body && method !== 'GET') {
     opts.headers['Content-Type'] = 'application/json';
     opts.body = JSON.stringify(body);
@@ -12,10 +35,23 @@ const fetchOptions = (method = 'GET', body) => {
 };
 
 export const auth = {
-  me: () => fetch(`${API}/auth/me`, fetchOptions()).then(r => r.json()),
-  logout: () => fetch(`${API}/auth/logout`, fetchOptions('POST')).then(r => r.json()),
+  me: () => {
+    const token = getToken();
+    if (!token) return Promise.resolve({ user: null });
+    return fetch(`${API}/auth/me`, fetchOptions()).then(r => {
+      if (!r.ok) {
+        // Token expired or invalid — clean up
+        removeToken();
+        return { user: null };
+      }
+      return r.json();
+    });
+  },
+  logout: () => {
+    removeToken();
+    return Promise.resolve({ ok: true });
+  },
   loginUrl: () => `${API}/auth/google`,
-  // Full server URL for OAuth redirect (browser navigates directly)
   googleLogin: () => {
     window.location.href = `${API}/auth/google`;
   },

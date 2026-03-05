@@ -1,14 +1,9 @@
 import { Router } from 'express';
 import ChatMessage from '../models/ChatMessage.js';
 import { getChatResponse } from '../data/philosophyKnowledge.js';
+import { optionalAuth } from '../middleware/auth.js';
 
 const router = Router();
-
-function optionalAuth(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  req.user = null;
-  next();
-}
 
 router.post('/message', optionalAuth, async (req, res) => {
   try {
@@ -38,7 +33,7 @@ router.post('/message', optionalAuth, async (req, res) => {
 
 router.get('/history', optionalAuth, async (req, res) => {
   try {
-    if (!req.isAuthenticated()) return res.json({ messages: [] });
+    if (!req.user) return res.json({ messages: [] });
     const messages = await ChatMessage.find({ user: req.user._id })
       .sort({ createdAt: 1 })
       .select('role content createdAt rejected')

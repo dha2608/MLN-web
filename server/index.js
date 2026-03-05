@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import session from 'express-session';
 import passport from './config/passport.js';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/auth.js';
@@ -58,22 +57,8 @@ app.use(rateLimit({
 
 app.use(express.json());
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'philosophy-secret',
-  resave: false,
-  saveUninitialized: false,
-  proxy: isProduction,
-  cookie: {
-    secure: isProduction,
-    httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    sameSite: isProduction ? 'none' : 'lax',
-  }
-}));
+// Passport (stateless — no session, JWT only)
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);

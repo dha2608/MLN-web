@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
-import { auth } from './api';
+import { Routes, Route, useSearchParams } from 'react-router-dom';
+import { auth, setToken, getToken } from './api';
 import Layout from './components/Layout';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -21,22 +21,26 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
 
+  // Handle OAuth redirect with JWT token
   useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      // Store token from OAuth redirect
+      setToken(token);
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname || '/');
+    }
+
+    // Fetch user from stored token
     auth.me().then(({ user: u }) => {
       setUser(u || null);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (searchParams.get('login') === 'success') {
-      window.history.replaceState({}, '', window.location.pathname || '/');
-      auth.me().then(({ user: u }) => setUser(u || null));
-    }
-  }, [searchParams]);
-
   const handleLogout = () => {
-    auth.logout().then(() => setUser(null));
+    auth.logout();
+    setUser(null);
   };
 
   return (

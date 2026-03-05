@@ -1,12 +1,8 @@
 import { Router } from 'express';
 import User from '../models/User.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
-
-function requireAuth(req, res, next) {
-  if (!req.isAuthenticated()) return res.status(401).json({ error: 'Unauthorized' });
-  next();
-}
 
 router.get('/profile', requireAuth, (req, res) => {
   const u = req.user;

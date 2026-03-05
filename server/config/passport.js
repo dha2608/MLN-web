@@ -38,11 +38,11 @@ passport.use(new GoogleStrategy({
   }
 }));
 
+// Serialize/deserialize still needed by passport even with session: false
 passport.serializeUser((user, done) => done(null, user._id));
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
-    done(null, user);
+    done(null, await User.findById(id));
   } catch (err) {
     done(err, null);
   }
