@@ -1,0 +1,263 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { philosophers as api } from '../api';
+
+export default function Philosophers() {
+  const [list, setList] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.list().then(({ philosophers }) => {
+      const data = philosophers || [];
+      setList(data);
+      setFiltered(data);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (!search.trim()) {
+      setFiltered(list);
+      return;
+    }
+    const q = search.toLowerCase();
+    setFiltered(list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      (p.nameVi && p.nameVi.toLowerCase().includes(q)) ||
+      (p.school && p.school.toLowerCase().includes(q))
+    ));
+  }, [search, list]);
+
+  if (loading) return (
+    <div className="page">
+      <div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải triết gia...</span></div>
+    </div>
+  );
+
+  return (
+    <div className="page phil-page">
+      <div className="phil-header stagger-1">
+        <div>
+          <h1 className="page-title">Triết gia</h1>
+          <p className="page-desc">Chọn một triết gia để xem tiểu sử và tư tưởng chính.</p>
+        </div>
+        <span className="phil-count">{list.length} triết gia</span>
+      </div>
+
+      {/* Search */}
+      <div className="phil-search stagger-2">
+        <div className="phil-search-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </div>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Tìm theo tên, trường phái..."
+          className="phil-search-input"
+          aria-label="Tìm kiếm triết gia"
+        />
+        {search && (
+          <button type="button" className="phil-search-clear" onClick={() => setSearch('')} aria-label="Xóa tìm kiếm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        )}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="empty-state stagger-3">
+          <div className="empty-icon" aria-hidden="true">{'\u03A6'}</div>
+          <p>Không tìm thấy triết gia nào phù hợp.</p>
+        </div>
+      ) : (
+        <div className="phil-grid">
+          {filtered.map((p, i) => (
+            <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`phil-card stagger-${(i % 7) + 1}`}>
+              <div className="phil-img-wrap">
+                {p.imageUrl ? (
+                  <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
+                ) : (
+                  <div className="phil-placeholder" aria-hidden="true">{p.name.charAt(0)}</div>
+                )}
+                <div className="phil-img-overlay" />
+              </div>
+              <div className="phil-info">
+                <h3>{p.name}</h3>
+                {p.nameVi && p.nameVi !== p.name && <span className="phil-name-vi">{p.nameVi}</span>}
+                <span className="phil-dates">{p.birthDeath}</span>
+                <span className="badge badge-school">{p.school}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <style>{`
+        /* Header */
+        .phil-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 1rem;
+          margin-bottom: 0.5rem;
+        }
+        .phil-header .page-desc { margin-bottom: 0; }
+        .phil-count {
+          flex-shrink: 0;
+          font-size: 0.82rem;
+          font-weight: 500;
+          color: var(--text-light);
+          background: var(--bg-alt);
+          padding: 0.3rem 0.75rem;
+          border-radius: 99px;
+          margin-top: 0.5rem;
+        }
+
+        /* Search */
+        .phil-search {
+          position: relative;
+          margin-bottom: 1.75rem;
+          max-width: 400px;
+        }
+        .phil-search-icon {
+          position: absolute;
+          left: 0.85rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-light);
+          display: flex;
+          pointer-events: none;
+        }
+        .phil-search-input {
+          width: 100%;
+          padding: 0.65rem 2.5rem 0.65rem 2.5rem;
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          font-family: inherit;
+          font-size: 0.9rem;
+          background: var(--bg-card);
+          color: var(--text);
+          transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .phil-search-input:focus {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 3px rgba(44,82,130,0.08);
+          outline: none;
+        }
+        .phil-search-input::placeholder { color: var(--text-light); }
+        .phil-search-clear {
+          position: absolute;
+          right: 0.65rem;
+          top: 50%;
+          transform: translateY(-50%);
+          background: var(--bg-alt);
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: var(--text-muted);
+          transition: all var(--transition);
+        }
+        .phil-search-clear:hover { background: var(--accent-light); color: var(--accent); }
+
+        /* Grid */
+        .phil-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 1.5rem;
+        }
+        .phil-card {
+          background: var(--bg-card);
+          border: 1px solid var(--border-light);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          color: var(--text);
+          transition: all var(--transition-slow);
+          display: flex;
+          flex-direction: column;
+        }
+        .phil-card:hover {
+          border-color: var(--accent);
+          box-shadow: var(--shadow-lg);
+          transform: translateY(-4px);
+          text-decoration: none;
+        }
+
+        .phil-img-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          overflow: hidden;
+          background: var(--accent-light);
+        }
+        .phil-img-wrap img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform var(--transition-slow);
+        }
+        .phil-card:hover .phil-img-wrap img { transform: scale(1.06); }
+
+        .phil-img-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 50%, rgba(26,26,46,0.6) 100%);
+          pointer-events: none;
+        }
+
+        .phil-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--font-serif);
+          font-size: 4rem;
+          font-weight: 600;
+          color: var(--accent);
+          background: var(--accent-light);
+        }
+
+        .phil-info {
+          padding: 1rem 1.25rem 1.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+        .phil-info h3 {
+          margin: 0;
+          font-size: 1.15rem;
+          font-weight: 600;
+          color: var(--text);
+        }
+        .phil-name-vi {
+          font-size: 0.85rem;
+          color: var(--text-light);
+        }
+        .phil-dates {
+          font-size: 0.8rem;
+          color: var(--text-muted);
+          margin-bottom: 0.4rem;
+        }
+        .phil-info .badge {
+          align-self: flex-start;
+          margin-top: 0.15rem;
+        }
+
+        @media (max-width: 480px) {
+          .phil-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+          .phil-info { padding: 0.75rem 0.9rem 1rem; }
+          .phil-info h3 { font-size: 1rem; }
+          .phil-header { flex-direction: column; gap: 0.25rem; }
+          .phil-search { max-width: 100%; }
+        }
+      `}</style>
+    </div>
+  );
+}
