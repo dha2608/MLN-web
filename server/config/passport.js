@@ -3,10 +3,16 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import User from '../models/User.js';
 
+// Build absolute callback URL for production (relative URL fails behind Render proxy)
+const callbackURL = process.env.NODE_ENV === 'production'
+  ? `${process.env.BACKEND_URL || 'https://mln-web-wbo8.onrender.com'}/api/auth/google/callback`
+  : '/api/auth/google/callback';
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/api/auth/google/callback'
+  callbackURL,
+  proxy: true
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ googleId: profile.id });

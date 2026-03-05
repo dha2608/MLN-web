@@ -23,12 +23,10 @@ const PORT = process.env.PORT || 4000;
 app.set('trust proxy', 1);
 connectDB();
 
-// Security headers
-app.use(helmet());
-
-// CORS — accept multiple origins for Vercel + localhost
+// CORS — must be BEFORE helmet so preflight works
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'https://mln-web-bay.vercel.app',
   'http://localhost:5173',
   'http://localhost:4173',
 ].filter(Boolean);
@@ -41,6 +39,12 @@ app.use(cors({
     cb(new Error('Not allowed by CORS'));
   },
   credentials: true
+}));
+
+// Security headers — configured to allow cross-origin requests from frontend
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
 }));
 
 // Global rate limit: 100 requests per 15 minutes per IP

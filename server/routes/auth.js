@@ -8,7 +8,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    const frontend = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontend = process.env.FRONTEND_URL || 'https://mln-web-bay.vercel.app';
     res.redirect(`${frontend}/?login=success`);
   }
 );
