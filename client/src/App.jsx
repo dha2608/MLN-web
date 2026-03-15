@@ -1,9 +1,18 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
-import { Routes, Route, useSearchParams } from 'react-router-dom';
+import { Routes, Route, useSearchParams, useLocation } from 'react-router-dom';
 import { auth, setToken, getToken } from './api';
 import Layout from './components/Layout';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+
+// Tự động cuộn lên đầu trang khi đổi route
+function ScrollToTopOnNav() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // Lazy-loaded pages for code splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -50,6 +59,7 @@ function App() {
 
   return (
     <div className="app-root">
+      <ScrollToTopOnNav />
       <a href="#main-content" className="skip-link">Chuyển đến nội dung chính</a>
       <Layout user={user} loading={loading} onLogout={handleLogout} />
       <main id="main-content" className="app-main">
