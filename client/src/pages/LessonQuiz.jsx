@@ -8,8 +8,6 @@ export default function LessonQuiz() {
   const quizData = lessonQuizzes[slug];
 
   const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [showExplanation, setShowExplanation] = useState({});
 
   if (!lesson || !quizData) {
     return (
@@ -28,38 +26,26 @@ export default function LessonQuiz() {
   const { questions, passingScore } = quizData;
   const totalQuestions = questions.length;
   const answeredCount = Object.keys(answers).length;
+  const allAnswered = answeredCount === totalQuestions;
 
   const handleSelect = (questionId, optionId) => {
-    if (submitted) return;
+    // Đã chọn rồi thì không cho đổi
+    if (answers[questionId]) return;
     setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
-  };
-
-  const handleSubmit = () => {
-    if (answeredCount < totalQuestions) return;
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleReset = () => {
     setAnswers({});
-    setSubmitted(false);
-    setShowExplanation({});
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const toggleExplanation = (qId) => {
-    setShowExplanation((prev) => ({ ...prev, [qId]: !prev[qId] }));
-  };
-
-  // Calculate score
-  const score = submitted
-    ? questions.reduce(
-        (acc, q) => acc + (answers[q.id] === q.correctAnswer ? 1 : 0),
-        0
-      )
-    : 0;
-  const passed = score >= passingScore;
-  const percentage = Math.round((score / totalQuestions) * 100);
+  // Calculate score (tính theo các câu đã trả lời)
+  const score = questions.reduce(
+    (acc, q) => acc + (answers[q.id] === q.correctAnswer ? 1 : 0),
+    0
+  );
+  const passed = allAnswered && score >= passingScore;
+  const percentage = allAnswered ? Math.round((score / totalQuestions) * 100) : 0;
 
   return (
     <div className="page page--quiz lq-page">
@@ -73,8 +59,8 @@ export default function LessonQuiz() {
         <p className="page-desc">{quizData.description}</p>
       </header>
 
-      {/* Result Banner */}
-      {submitted && (
+      {/* Result Banner — hiện khi trả lời hết */}
+      {allAnswered && (
         <div className={`lq-result stagger-1 ${passed ? 'lq-result--pass' : 'lq-result--fail'}`}>
           <div className="lq-result-score">
             <span className="lq-result-number">{score}/{totalQuestions}</span>
@@ -100,7 +86,7 @@ export default function LessonQuiz() {
       )}
 
       {/* Progress */}
-      {!submitted && (
+      {!allAnswered && (
         <div className="lq-progress stagger-2">
           <div className="lq-progress-bar">
             <div
@@ -118,14 +104,14 @@ export default function LessonQuiz() {
       <div className="lq-questions">
         {questions.map((q, i) => {
           const userAnswer = answers[q.id];
+          const isAnswered = !!userAnswer;
           const isCorrect = userAnswer === q.correctAnswer;
-          const showExp = showExplanation[q.id];
 
           return (
             <div
               key={q.id}
               className={`lq-question card stagger-${Math.min(i + 2, 7)} ${
-                submitted
+                isAnswered
                   ? isCorrect
                     ? 'lq-question--correct'
                     : 'lq-question--wrong'
@@ -140,12 +126,12 @@ export default function LessonQuiz() {
               <div className="lq-options">
                 {q.options.map((opt) => {
                   const isSelected = userAnswer === opt.id;
-                  const isCorrectOpt = submitted && opt.id === q.correctAnswer;
+                  const isCorrectOpt = isAnswered && opt.id === q.correctAnswer;
                   const isWrongSelected =
-                    submitted && isSelected && !isCorrect;
+                    isAnswered && isSelected && !isCorrect;
 
                   let optClass = 'lq-option';
-                  if (isSelected && !submitted) optClass += ' lq-option--selected';
+                  if (isSelected && !isAnswered) optClass += ' lq-option--selected';
                   if (isCorrectOpt) optClass += ' lq-option--correct';
                   if (isWrongSelected) optClass += ' lq-option--wrong';
 
@@ -155,7 +141,7 @@ export default function LessonQuiz() {
                       type="button"
                       className={optClass}
                       onClick={() => handleSelect(q.id, opt.id)}
-                      disabled={submitted}
+                      disabled={isAnswered}
                     >
                       <span className="lq-option-letter">{opt.id.toUpperCase()}</span>
                       <span className="lq-option-text">{opt.text}</span>
@@ -170,38 +156,19 @@ export default function LessonQuiz() {
                 })}
               </div>
 
-              {submitted && (
-                <div className="lq-explanation-wrap">
-                  <button
-                    type="button"
-                    className="lq-explanation-toggle"
-                    onClick={() => toggleExplanation(q.id)}
-                  >
-                    {showExp ? 'Ẩn giải thích' : 'Xem giải thích'}
-                  </button>
-                  {showExp && (
-                    <p className="lq-explanation">{q.explanation}</p>
-                  )}
+              {/* Hiển thị giải thích ngay khi chọn */}
+              {isAnswered && (
+                <div className="lq-explanation-wrap lq-explanation-instant">
+                  <div className={`lq-feedback ${isCorrect ? 'lq-feedback--correct' : 'lq-feedback--wrong'}`}>
+                    {isCorrect ? '✓ Chính xác!' : '✗ Chưa đúng!'}
+                  </div>
+                  <p className="lq-explanation">{q.explanation}</p>
                 </div>
               )}
             </div>
           );
         })}
       </div>
-
-      {/* Submit Button */}
-      {!submitted && (
-        <div className="lq-submit">
-          <button
-            type="button"
-            className="btn btn-primary btn-lg"
-            onClick={handleSubmit}
-            disabled={answeredCount < totalQuestions}
-          >
-            Nộp bài ({answeredCount}/{totalQuestions})
-          </button>
-        </div>
-      )}
 
       <style>{`
         .lq-page { padding-bottom: 3rem; }
@@ -389,38 +356,34 @@ export default function LessonQuiz() {
         .lq-option--correct .lq-option-icon { color: var(--accent-green); }
         .lq-option--wrong .lq-option-icon { color: #f87171; }
 
-        /* Explanation */
+        /* Explanation — instant feedback */
         .lq-explanation-wrap {
           margin-top: 1rem;
           padding-top: 0.75rem;
           border-top: 1px solid var(--border-light);
         }
-        .lq-explanation-toggle {
-          background: none;
-          border: none;
-          color: var(--accent);
-          font-family: inherit;
-          font-size: 0.85rem;
-          font-weight: 500;
-          cursor: pointer;
-          padding: 0.25rem 0;
-          transition: color var(--transition);
+        .lq-explanation-instant {
+          animation: lq-fadeIn 0.3s ease;
         }
-        .lq-explanation-toggle:hover { color: var(--accent-hover); }
+        @keyframes lq-fadeIn {
+          from { opacity: 0; transform: translateY(-6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .lq-feedback {
+          font-weight: 600;
+          font-size: 0.92rem;
+          margin-bottom: 0.5rem;
+        }
+        .lq-feedback--correct { color: var(--accent-green); }
+        .lq-feedback--wrong { color: #f87171; }
         .lq-explanation {
-          margin: 0.75rem 0 0;
+          margin: 0;
           color: var(--text-muted);
           font-size: 0.9rem;
           line-height: 1.65;
           background: var(--bg-alt);
           padding: 0.75rem 1rem;
           border-radius: var(--radius-sm);
-        }
-
-        /* Submit */
-        .lq-submit {
-          text-align: center;
-          padding: 1rem 0;
         }
 
         @media (max-width: 640px) {
