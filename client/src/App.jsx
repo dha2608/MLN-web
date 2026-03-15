@@ -1,20 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, useSearchParams } from 'react-router-dom';
 import { auth, setToken, getToken } from './api';
 import Layout from './components/Layout';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Philosophers from './pages/Philosophers';
-import PhilosopherDetail from './pages/PhilosopherDetail';
-import Concepts from './pages/Concepts';
-import ConceptDetail from './pages/ConceptDetail';
-import Dashboard from './pages/Dashboard';
-import Quiz from './pages/Quiz';
-import Compare from './pages/Compare';
-import Stats from './pages/Stats';
-import ChatBox from './components/ChatBox';
 import ScrollToTop from './components/ScrollToTop';
-import PrivacyBanner from './components/PrivacyBanner';
+
+// Lazy-loaded pages for code splitting
+const Home = lazy(() => import('./pages/Home'));
+const Philosophers = lazy(() => import('./pages/Philosophers'));
+const PhilosopherDetail = lazy(() => import('./pages/PhilosopherDetail'));
+const Concepts = lazy(() => import('./pages/Concepts'));
+const ConceptDetail = lazy(() => import('./pages/ConceptDetail'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Quiz = lazy(() => import('./pages/Quiz'));
+const Compare = lazy(() => import('./pages/Compare'));
+const Stats = lazy(() => import('./pages/Stats'));
+const Lessons = lazy(() => import('./pages/Lessons'));
+const LessonDetail = lazy(() => import('./pages/LessonDetail'));
+const LessonQuiz = lazy(() => import('./pages/LessonQuiz'));
+const ChatBox = lazy(() => import('./components/ChatBox'));
+const PrivacyBanner = lazy(() => import('./components/PrivacyBanner'));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -48,22 +53,31 @@ function App() {
       <a href="#main-content" className="skip-link">Chuyển đến nội dung chính</a>
       <Layout user={user} loading={loading} onLogout={handleLogout} />
       <main id="main-content" className="app-main">
-        <Routes>
-          <Route path="/" element={<Home user={user} />} />
-          <Route path="/triet-gia" element={<Philosophers />} />
-          <Route path="/triet-gia/:slug" element={<PhilosopherDetail user={user} />} />
-          <Route path="/khai-niem" element={<Concepts />} />
-          <Route path="/khai-niem/:slug" element={<ConceptDetail user={user} />} />
-          <Route path="/dashboard" element={<Dashboard user={user} />} />
-          <Route path="/trac-nghiem" element={<Quiz />} />
-          <Route path="/so-sanh" element={<Compare />} />
-          <Route path="/thong-ke" element={<Stats />} />
-        </Routes>
+        <Suspense fallback={<div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải...</span></div>}>
+          <Routes>
+            <Route path="/" element={<Home user={user} />} />
+            <Route path="/triet-gia" element={<Philosophers />} />
+            <Route path="/triet-gia/:slug" element={<PhilosopherDetail user={user} />} />
+            <Route path="/khai-niem" element={<Concepts />} />
+            <Route path="/khai-niem/:slug" element={<ConceptDetail user={user} />} />
+            <Route path="/bai-hoc" element={<Lessons />} />
+            <Route path="/bai-hoc/:slug" element={<LessonDetail />} />
+            <Route path="/bai-hoc/:slug/quiz" element={<LessonQuiz />} />
+            <Route path="/dashboard" element={<Dashboard user={user} />} />
+            <Route path="/trac-nghiem" element={<Quiz />} />
+            <Route path="/so-sanh" element={<Compare />} />
+            <Route path="/thong-ke" element={<Stats />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
-      <ChatBox user={user} />
+      <Suspense fallback={null}>
+        <ChatBox user={user} />
+      </Suspense>
       <ScrollToTop />
-      <PrivacyBanner />
+      <Suspense fallback={null}>
+        <PrivacyBanner />
+      </Suspense>
     </div>
   );
 }
