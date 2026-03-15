@@ -28,6 +28,7 @@ export default function Layout({ user, loading, onLogout }) {
     { to: '/', label: 'Trang chủ' },
     { to: '/triet-gia', label: 'Triết gia' },
     { to: '/khai-niem', label: 'Khái niệm' },
+    { to: '/bai-hoc', label: 'Bài học' },
     { to: '/trac-nghiem', label: 'Trắc nghiệm' },
     { to: '/so-sanh', label: 'So sánh' },
     { to: '/thong-ke', label: 'Thống kê' },
@@ -303,7 +304,7 @@ export default function Layout({ user, loading, onLogout }) {
           position: fixed;
           inset: 0;
           background: rgba(0,0,0,0.2);
-          z-index: 49;
+          z-index: 90;
           transition: opacity 0.3s ease;
         }
         .nav-mobile {
@@ -317,6 +318,8 @@ export default function Layout({ user, loading, onLogout }) {
           max-height: 0;
           overflow: hidden;
           transition: max-height var(--transition-slow), padding var(--transition-slow);
+          position: relative;
+          z-index: 91;
         }
         .nav-mobile.open { max-height: 500px; padding-top: 0.75rem; }
         .nav-mobile .nav-link {
