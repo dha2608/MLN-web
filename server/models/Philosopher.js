@@ -14,4 +14,8 @@ const philosopherSchema = new mongoose.Schema({
   imageSourceUrl: { type: String, default: '' }
 }, { timestamps: true });
 
+// Performance indexes
+philosopherSchema.index({ school: 1 });
+philosopherSchema.index({ name: 1 });
+
 export default mongoose.model('Philosopher', philosopherSchema);
