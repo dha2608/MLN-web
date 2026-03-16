@@ -1,34 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { philosophers as api } from '../api';
 
 export default function Philosophers() {
   const [list, setList] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const debounceRef = useRef(null);
 
   useEffect(() => {
     api.list().then(({ philosophers }) => {
-      const data = philosophers || [];
-      setList(data);
-      setFiltered(data);
+      setList(philosophers || []);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (!search.trim()) {
-      setFiltered(list);
-      return;
-    }
-    const q = search.toLowerCase();
-    setFiltered(list.filter(p =>
+  // Debounce search input (300ms)
+  const handleSearch = useCallback((e) => {
+    const val = e.target.value;
+    setSearch(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => setDebouncedSearch(val), 300);
+  }, []);
+
+  // Memoized filtered list
+  const filtered = useMemo(() => {
+    if (!debouncedSearch.trim()) return list;
+    const q = debouncedSearch.toLowerCase();
+    return list.filter(p =>
       p.name.toLowerCase().includes(q) ||
       (p.nameVi && p.nameVi.toLowerCase().includes(q)) ||
       (p.school && p.school.toLowerCase().includes(q))
-    ));
-  }, [search, list]);
+    );
+  }, [debouncedSearch, list]);
 
   if (loading) return (
     <div className="page">
@@ -54,7 +59,7 @@ export default function Philosophers() {
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearch}
           placeholder="Tìm theo tên, trường phái..."
           className="phil-search-input"
           aria-label="Tìm kiếm triết gia"
