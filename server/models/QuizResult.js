@@ -6,4 +6,8 @@ const quizResultSchema = new mongoose.Schema({
   score: { type: Map, of: Number, default: {} },
 }, { timestamps: true });
 
+// Performance indexes
+quizResultSchema.index({ user: 1 });
+quizResultSchema.index({ primarySchool: 1 });
+
 export default mongoose.model('QuizResult', quizResultSchema);
