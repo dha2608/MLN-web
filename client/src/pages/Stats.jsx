@@ -319,8 +319,8 @@ function UsersTab({ engagement, overview, quiz, chatAct, topP, hotQ, recent, vis
         </section>
       )}
 
-      {/* Empty state khi chưa có data */}
-      {(!engagement || engagement.totalUsers === 0) && (!topP?.topics?.length) && (!quiz?.totalQuizzes) && (
+      {/* Empty state chỉ hiện khi thực sự không có dữ liệu nào */}
+      {(!engagement || engagement.totalUsers === 0) && (!overview?.totalPageViews) && (!topP?.topics?.length) && (!quiz?.totalQuizzes) && (
         <div className="empty-state stagger-3">
           <div className="empty-icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
