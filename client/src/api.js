@@ -2,6 +2,18 @@ const API = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
   : '/api';
 
+// --- Visitor ID (anonymous tracking, persists across sessions) ---
+const VISITOR_KEY = 'philosophy_visitor_id';
+
+function getVisitorId() {
+  let id = localStorage.getItem(VISITOR_KEY);
+  if (!id) {
+    id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    localStorage.setItem(VISITOR_KEY, id);
+  }
+  return id;
+}
+
 // --- Token management ---
 const TOKEN_KEY = 'philosophy_token';
 
@@ -143,6 +155,11 @@ export const quiz = {
 const STATS_TTL = 2 * 60 * 1000;
 
 export const stats = {
+  track: (page) => {
+    // Fire-and-forget, never block page load
+    const body = { page, visitorId: getVisitorId(), referrer: document.referrer || '' };
+    fetch(`${API}/stats/track`, fetchOptions('POST', body)).catch(() => {});
+  },
   overview: () => cachedFetch(`${API}/stats/overview`, STATS_TTL),
   engagement: () => cachedFetch(`${API}/stats/engagement`, STATS_TTL),
   quizDistribution: () => cachedFetch(`${API}/stats/quiz-distribution`, STATS_TTL),
@@ -150,6 +167,8 @@ export const stats = {
   topPhilosophers: () => cachedFetch(`${API}/stats/top-philosophers`, STATS_TTL),
   hotQuestions: () => cachedFetch(`${API}/stats/hot-questions`, STATS_TTL),
   recentActivity: () => cachedFetch(`${API}/stats/recent-activity`, STATS_TTL),
+  visitorActivity: () => cachedFetch(`${API}/stats/visitor-activity`, STATS_TTL),
+  topPages: () => cachedFetch(`${API}/stats/top-pages`, STATS_TTL),
   schoolDistribution: () => cachedFetch(`${API}/stats/school-distribution`, STATIC_TTL),
   eraDistribution: () => cachedFetch(`${API}/stats/era-distribution`, STATIC_TTL),
   philosopherRichness: () => cachedFetch(`${API}/stats/philosopher-richness`, STATIC_TTL),
