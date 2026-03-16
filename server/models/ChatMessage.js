@@ -8,4 +8,10 @@ const chatMessageSchema = new mongoose.Schema({
   rejected: { type: Boolean, default: false }
 }, { timestamps: true });
 
+// Performance indexes
+chatMessageSchema.index({ user: 1, createdAt: -1 });
+chatMessageSchema.index({ role: 1, topicDetected: 1 });
+chatMessageSchema.index({ createdAt: -1 });
+chatMessageSchema.index({ role: 1, rejected: 1, createdAt: -1 });
+
 export default mongoose.model('ChatMessage', chatMessageSchema);
