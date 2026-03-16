@@ -42,39 +42,58 @@ const CONCEPT_SCHOOLS = {
   'phi lý': 'Chủ nghĩa Hiện sinh — Jean-Paul Sartre / Albert Camus'
 };
 
+// Seed runs ONCE at startup, not on every request
+let seeded = false;
 async function seedConcepts() {
-  const count = await Concept.countDocuments();
-  if (count === 0) {
-    const docs = Object.entries(CONCEPTS).map(([slug, desc]) => ({
-      slug,
-      title: CONCEPT_TITLES[slug] || slug,
-      description: desc,
-      school: CONCEPT_SCHOOLS[slug] || ''
-    }));
-    await Concept.insertMany(docs);
-  } else {
-    // Upsert: update existing + insert missing concepts
-    for (const [slug, desc] of Object.entries(CONCEPTS)) {
-      await Concept.updateOne(
-        { slug },
-        {
-          $set: {
-            title: CONCEPT_TITLES[slug] || slug,
-            description: desc,
-            school: CONCEPT_SCHOOLS[slug] || ''
-          }
-        },
-        { upsert: true }
-      );
+  if (seeded) return;
+  try {
+    const count = await Concept.countDocuments();
+    if (count === 0) {
+      const docs = Object.entries(CONCEPTS).map(([slug, desc]) => ({
+        slug,
+        title: CONCEPT_TITLES[slug] || slug,
+        description: desc,
+        school: CONCEPT_SCHOOLS[slug] || ''
+      }));
+      await Concept.insertMany(docs);
+    } else {
+      for (const [slug, desc] of Object.entries(CONCEPTS)) {
+        await Concept.updateOne(
+          { slug },
+          {
+            $set: {
+              title: CONCEPT_TITLES[slug] || slug,
+              description: desc,
+              school: CONCEPT_SCHOOLS[slug] || ''
+            }
+          },
+          { upsert: true }
+        );
+      }
     }
+    seeded = true;
+    console.log('Concepts seeded');
+  } catch (err) {
+    console.error('Seed concepts error:', err);
   }
 }
 
+// Export for startup seeding
+export { seedConcepts };
+
+// In-memory cache for concept list (small dataset ~16 items)
+let listCache = null;
+let listCacheTime = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 router.get('/', async (req, res) => {
   try {
-    await seedConcepts();
-    const list = await Concept.find().sort({ title: 1 }).lean();
-    res.json({ concepts: list });
+    const now = Date.now();
+    if (!listCache || now - listCacheTime > CACHE_TTL) {
+      listCache = await Concept.find().sort({ title: 1 }).lean();
+      listCacheTime = now;
+    }
+    res.json({ concepts: listCache });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -82,7 +101,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:slug', async (req, res) => {
   try {
-    await seedConcepts();
     const c = await Concept.findOne({ slug: req.params.slug }).lean();
     if (!c) return res.status(404).json({ error: 'Not found' });
     res.json({ concept: c });
