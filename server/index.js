@@ -8,8 +8,8 @@ import { connectDB } from './config/db.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import chatRoutes from './routes/chat.js';
-import philosophersRoutes from './routes/philosophers.js';
-import conceptsRoutes from './routes/concepts.js';
+import philosophersRoutes, { seedPhilosophers } from './routes/philosophers.js';
+import conceptsRoutes, { seedConcepts } from './routes/concepts.js';
 import quizRoutes from './routes/quiz.js';
 import quoteRoutes from './routes/quote.js';
 import statsRoutes from './routes/stats.js';
@@ -20,7 +20,16 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.set('trust proxy', 1);
-connectDB();
+
+// Connect DB then seed data ONCE at startup
+connectDB().then(async () => {
+  try {
+    await Promise.all([seedPhilosophers(), seedConcepts()]);
+    console.log('Data seeded at startup');
+  } catch (err) {
+    console.error('Seed error (non-fatal):', err.message);
+  }
+});
 
 // CORS — must be BEFORE helmet so preflight works
 const allowedOrigins = [
