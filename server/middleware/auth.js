@@ -14,6 +14,7 @@ function extractToken(req) {
 
 /**
  * Require authentication — returns 401 if no valid token
+ * Uses .lean() and .select() for faster queries
  */
 export async function requireAuth(req, res, next) {
   const token = extractToken(req);
@@ -23,7 +24,7 @@ export async function requireAuth(req, res, next) {
   if (!payload) return res.status(401).json({ error: 'Token không hợp lệ hoặc đã hết hạn' });
 
   try {
-    const user = await User.findById(payload.id);
+    const user = await User.findById(payload.id).select('_id name email avatar googleId').lean();
     if (!user) return res.status(401).json({ error: 'Người dùng không tồn tại' });
     req.user = user;
     next();
@@ -34,6 +35,7 @@ export async function requireAuth(req, res, next) {
 
 /**
  * Optional authentication — sets req.user if valid token present, otherwise null
+ * Uses .lean() and .select() for faster queries
  */
 export async function optionalAuth(req, res, next) {
   const token = extractToken(req);
@@ -49,7 +51,7 @@ export async function optionalAuth(req, res, next) {
   }
 
   try {
-    req.user = await User.findById(payload.id);
+    req.user = await User.findById(payload.id).select('_id name email avatar googleId').lean();
   } catch {
     req.user = null;
   }
