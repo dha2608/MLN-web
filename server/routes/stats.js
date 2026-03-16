@@ -50,14 +50,25 @@ router.get('/overview', async (req, res) => {
       ]).then(r => r[0]?.total || 0),
       Philosopher.countDocuments(),
       Concept.countDocuments(),
-      // PageView stats
+      // PageView stats — use aggregation for reliable unique counts
       PageView.countDocuments(),
       PageView.countDocuments({ createdAt: { $gte: todayStart } }),
       PageView.countDocuments({ createdAt: { $gte: weekAgo } }),
       PageView.countDocuments({ createdAt: { $gte: monthAgo } }),
-      PageView.distinct('visitorId').then(ids => ids.length),
-      PageView.distinct('visitorId', { createdAt: { $gte: todayStart } }).then(ids => ids.length),
-      PageView.distinct('visitorId', { createdAt: { $gte: weekAgo } }).then(ids => ids.length),
+      PageView.aggregate([
+        { $group: { _id: '$visitorId' } },
+        { $count: 'total' }
+      ]).then(r => r[0]?.total || 0),
+      PageView.aggregate([
+        { $match: { createdAt: { $gte: todayStart } } },
+        { $group: { _id: '$visitorId' } },
+        { $count: 'total' }
+      ]).then(r => r[0]?.total || 0),
+      PageView.aggregate([
+        { $match: { createdAt: { $gte: weekAgo } } },
+        { $group: { _id: '$visitorId' } },
+        { $count: 'total' }
+      ]).then(r => r[0]?.total || 0),
     ]);
 
     // Count from static knowledge
