@@ -19,8 +19,10 @@ export default function Stats() {
       statsApi.schoolDistribution(),
       statsApi.eraDistribution(),
       statsApi.philosopherRichness(),
-    ]).then(([overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness]) => {
-      setData({ overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness });
+      statsApi.visitorActivity(),
+      statsApi.topPages(),
+    ]).then(([overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness, visitorAct, topPages]) => {
+      setData({ overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness, visitorAct, topPages });
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
@@ -31,7 +33,7 @@ export default function Stats() {
     </div>
   );
 
-  const { overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness } = data;
+  const { overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness, visitorAct, topPages } = data;
 
   return (
     <div className="page page--narrow stats-page">
@@ -56,7 +58,7 @@ export default function Stats() {
       </div>
 
       {tab === 'users' ? (
-        <UsersTab engagement={engagement} overview={overview} quiz={quiz} chatAct={chatAct} topP={topP} hotQ={hotQ} recent={recent} />
+        <UsersTab engagement={engagement} overview={overview} quiz={quiz} chatAct={chatAct} topP={topP} hotQ={hotQ} recent={recent} visitorAct={visitorAct} topPages={topPages} />
       ) : (
         <KnowledgeTab overview={overview} schoolD={schoolD} eraD={eraD} richness={richness} />
       )}
@@ -66,27 +68,70 @@ export default function Stats() {
   );
 }
 
+// Human-readable page names for Vietnamese paths
+const PAGE_NAMES = {
+  '/': 'Trang chủ',
+  '/triet-gia': 'Danh sách triết gia',
+  '/khai-niem': 'Khái niệm',
+  '/bai-hoc': 'Bài học',
+  '/dashboard': 'Dashboard',
+  '/trac-nghiem': 'Trắc nghiệm',
+  '/so-sanh': 'So sánh triết gia',
+  '/thong-ke': 'Thống kê',
+};
+
 /* ========================= TAB: NGƯỜI DÙNG ========================= */
-function UsersTab({ engagement, overview, quiz, chatAct, topP, hotQ, recent }) {
+function UsersTab({ engagement, overview, quiz, chatAct, topP, hotQ, recent, visitorAct, topPages }) {
   const maxTopCount = topP?.topics?.length > 0 ? Math.max(...topP.topics.map(t => t.count)) : 1;
   const maxQuiz = quiz?.distribution?.length > 0 ? Math.max(...quiz.distribution.map(d => d.count)) : 1;
+  const maxPageViews = topPages?.pages?.length > 0 ? Math.max(...topPages.pages.map(p => p.views)) : 1;
 
   return (
     <div className="stats-tab-content">
+      {/* Visitor Overview - NEW */}
+      {overview && (
+        <div className="stats-overview stagger-3">
+          <div className="stat-card stat-card--visitor">
+            <span className="stat-card-value">{overview.totalPageViews ?? 0}</span>
+            <span className="stat-card-label">Tổng lượt xem</span>
+          </div>
+          <div className="stat-card stat-card--visitor">
+            <span className="stat-card-value">{overview.uniqueVisitorsTotal ?? 0}</span>
+            <span className="stat-card-label">Khách truy cập</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-card-value">{overview.uniqueVisitorsToday ?? 0}</span>
+            <span className="stat-card-label">Khách hôm nay</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-card-value">{overview.todayPageViews ?? 0}</span>
+            <span className="stat-card-label">Lượt xem hôm nay</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-card-value">{overview.uniqueVisitorsWeek ?? 0}</span>
+            <span className="stat-card-label">Khách 7 ngày</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-card-value">{overview.weekPageViews ?? 0}</span>
+            <span className="stat-card-label">Lượt xem 7 ngày</span>
+          </div>
+        </div>
+      )}
+
       {/* Engagement overview */}
       {engagement && (
-        <div className="stats-overview stagger-3">
+        <div className="stats-overview stagger-4">
           <div className="stat-card stat-card--accent">
             <span className="stat-card-value">{engagement.totalUsers}</span>
-            <span className="stat-card-label">Tổng người dùng</span>
+            <span className="stat-card-label">Tài khoản đăng ký</span>
           </div>
           <div className="stat-card">
             <span className="stat-card-value">{engagement.activeToday}</span>
-            <span className="stat-card-label">Hoạt động hôm nay</span>
+            <span className="stat-card-label">Đăng nhập hôm nay</span>
           </div>
           <div className="stat-card">
             <span className="stat-card-value">{engagement.activeWeek}</span>
-            <span className="stat-card-label">Hoạt động 7 ngày</span>
+            <span className="stat-card-label">Đăng nhập 7 ngày</span>
           </div>
           <div className="stat-card">
             <span className="stat-card-value">{overview?.totalQuestions ?? 0}</span>
@@ -101,6 +146,46 @@ function UsersTab({ engagement, overview, quiz, chatAct, topP, hotQ, recent }) {
             <span className="stat-card-label">TB lượt truy cập</span>
           </div>
         </div>
+      )}
+
+      {/* Visitor Activity Timeline - NEW */}
+      {visitorAct?.activity?.length > 0 && (
+        <section className="stats-section stagger-5">
+          <h2 className="section-title">Lượt truy cập — 30 ngày gần nhất</h2>
+          <div className="chat-activity-chart">
+            {visitorAct.activity.map((a, i) => {
+              const max = Math.max(...visitorAct.activity.map(x => x.views));
+              const h = max > 0 ? (a.views / max) * 100 : 0;
+              return (
+                <div key={i} className="chat-bar-col" title={`${a.date}: ${a.views} lượt xem, ${a.visitors} khách`}>
+                  <div className="chat-bar chat-bar--visitor" style={{ height: `${Math.max(h, 4)}%`, animationDelay: `${i * 0.03}s` }} />
+                  {i % 5 === 0 && <span className="chat-bar-label">{a.date.slice(5)}</span>}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Top Pages - NEW */}
+      {topPages?.pages?.length > 0 && (
+        <section className="stats-section stagger-6">
+          <h2 className="section-title">Trang được xem nhiều nhất</h2>
+          <div className="stat-bars">
+            {topPages.pages.map((p, i) => (
+              <div key={i} className="stat-bar-row">
+                <div className="stat-bar-info">
+                  <span className="stat-bar-rank">{i + 1}</span>
+                  <span className="stat-bar-name">{PAGE_NAMES[p.page] || p.page}</span>
+                  <span className="stat-bar-count">{p.views} lượt xem · {p.visitors} khách</span>
+                </div>
+                <div className="stat-bar-track">
+                  <div className="stat-bar-fill stat-bar-fill--visitor" style={{ width: `${(p.views / maxPageViews) * 100}%`, animationDelay: `${i * 0.08}s` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       )}
 
       {/* Quiz Distribution */}
@@ -422,6 +507,9 @@ const STYLES = `
   }
   .stat-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-2px); }
   .stat-card--accent { background: var(--gradient-warm); border-color: rgba(197,165,90,0.2); }
+  .stat-card--visitor { background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-color: rgba(56,189,248,0.2); }
+  .stat-bar-fill--visitor { background: linear-gradient(135deg, #0ea5e9, #38bdf8); }
+  .chat-bar--visitor { background: linear-gradient(to top, #0ea5e9, #38bdf8) !important; }
   .stat-card-value { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--text); line-height: 1.1; }
   .stat-card-label { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; }
 
