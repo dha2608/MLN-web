@@ -38,7 +38,7 @@ export default function ConceptDetail({ user }) {
       <article className="cd-article">
         {/* Header */}
         <header className="cd-header stagger-1">
-          <div className="cd-header-icon" aria-hidden="true">{'\u2234'}</div>
+          <div className="cd-header-icon" aria-hidden="true">💡</div>
           <div className="cd-header-text">
             {concept.school && <span className="badge badge-school">{concept.school}</span>}
             <h1>{concept.title}</h1>

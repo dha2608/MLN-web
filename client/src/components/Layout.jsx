@@ -26,10 +26,9 @@ export default function Layout({ user, loading, onLogout }) {
 
   const navItems = [
     { to: '/', label: 'Trang chủ' },
+    { to: '/bai-hoc', label: 'Bài học' },
     { to: '/triet-gia', label: 'Nhà tư tưởng' },
     { to: '/khai-niem', label: 'Khái niệm' },
-    { to: '/bai-hoc', label: 'Bài học' },
-    { to: '/trac-nghiem', label: 'Trắc nghiệm' },
     { to: '/so-sanh', label: 'So sánh' },
     { to: '/thong-ke', label: 'Thống kê' },
   ];

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { quiz as quizApi } from '../api';
 
 const SCHOOL_ICONS = {
-  'Chủ nghĩa duy lý': '\u2261',
-  'Chủ nghĩa duy tâm': '\u2734',
-  'Chủ nghĩa kinh nghiệm': '\u2318',
-  'Chủ nghĩa hiện sinh': '\u221E',
-  'Chủ nghĩa khắc kỷ': '\u2694',
-  'Nho giáo': '\u2609',
+  'Chủ nghĩa duy lý': '🔬',
+  'Chủ nghĩa duy tâm': '🌀',
+  'Chủ nghĩa kinh nghiệm': '🔎',
+  'Chủ nghĩa hiện sinh': '🌊',
+  'Chủ nghĩa khắc kỷ': '🛡',
+  'Nho giáo': '📜',
 };
 
 export default function Quiz() {
@@ -45,8 +45,14 @@ export default function Quiz() {
 
   return (
     <div className="page page--quiz quiz-page">
+      {/* Extension banner */}
+      <div className="quiz-ext-banner stagger-1">
+        <span className="quiz-ext-badge">Phần mở rộng — Triết học</span>
+        <p>Đây là trắc nghiệm tính cách triết học. Để học kinh tế chính trị, hãy xem <Link to="/bai-hoc">Bài học KTCT</Link>.</p>
+      </div>
+
       {/* Header */}
-      <div className="quiz-header stagger-1">
+      <div className="quiz-header stagger-2">
         <span className="quiz-icon" aria-hidden="true">?</span>
         <h1 className="page-title">Bạn thuộc trường phái nào?</h1>
         <p className="page-desc">Trắc nghiệm ngắn dựa trên tư tưởng kinh tế chính trị và triết học. Chọn câu trả lời gần với quan điểm của bạn.</p>
@@ -117,6 +123,33 @@ export default function Quiz() {
 
       <style>{`
         .quiz-page .page-title { margin-bottom: 0.35rem; }
+
+        /* Extension banner */
+        .quiz-ext-banner {
+          background: var(--accent-light);
+          border: 1px solid var(--border-light);
+          border-left: 4px solid var(--accent);
+          border-radius: var(--radius);
+          padding: 1rem 1.25rem;
+          margin-bottom: 2rem;
+          font-size: 0.9rem;
+          color: var(--text-muted);
+          line-height: 1.6;
+        }
+        .quiz-ext-badge {
+          display: inline-block;
+          background: var(--accent);
+          color: white;
+          font-size: 0.72rem;
+          font-weight: 600;
+          padding: 0.2rem 0.6rem;
+          border-radius: 99px;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          margin-bottom: 0.4rem;
+        }
+        .quiz-ext-banner p { margin: 0; }
+        .quiz-ext-banner a { font-weight: 600; }
 
         /* Header */
         .quiz-header { text-align: center; margin-bottom: 2rem; }

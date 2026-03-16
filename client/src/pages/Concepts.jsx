@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { concepts as api } from '../api';
 
 const CONCEPT_ICONS = {
-  'Kinh tế chính trị': '\u2692',
-  'Nhận thức luận': '\u2318',
-  'Siêu hình học': '\u2734',
-  'Đạo đức học': '\u2261',
-  'Logic học': '\u2234',
-  'Triết học chính trị': '\u2694',
-  'Mỹ học': '\u2605',
+  'Kinh tế chính trị': '⚒',
+  'Nhận thức luận': '🔎',
+  'Siêu hình học': '🌀',
+  'Đạo đức học': '⚖',
+  'Logic học': '💡',
+  'Triết học chính trị': '🏛',
+  'Mỹ học': '🎨',
 };
 
 function isKtctConcept(c) {
@@ -46,7 +46,7 @@ export default function Concepts() {
 
       {list.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon" aria-hidden="true">{'\u2234'}</div>
+          <div className="empty-icon" aria-hidden="true">💡</div>
           <p>Chưa có khái niệm nào.</p>
         </div>
       ) : (

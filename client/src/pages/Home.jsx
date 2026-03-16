@@ -3,26 +3,26 @@ import { Link } from 'react-router-dom';
 import { quote, philosophers as philApi, schools as schoolsApi, timeline as timelineApi } from '../api';
 
 const FEATURES = [
-  { to: '/triet-gia', title: 'Nhà tư tưởng', desc: 'Marx, Engels, Lenin, Socrates, Plato, Aristotle, Kant, Nietzsche, Khổng Tử, Lão Tử...', icon: '\u2692' },
-  { to: '/khai-niem', title: 'Khái niệm', desc: 'Giá trị thặng dư, đấu tranh giai cấp, duy vật biện chứng, ý niệm, bổn phận, vô vi...', icon: '\u2234' },
-  { to: '/trac-nghiem', title: 'Trắc nghiệm', desc: '"Bạn thuộc trường phái nào?" — khám phá tính cách tư tưởng.', icon: '?' },
-  { to: '/so-sanh', title: 'So sánh tư tưởng', desc: 'Chọn hai nhà tư tưởng để so sánh quan điểm.', icon: '\u21C4' },
-  { to: '/thong-ke', title: 'Thống kê thú vị', desc: 'Nhà tư tưởng được hỏi nhiều nhất, chủ đề hot...', icon: '#' },
+  { to: '/bai-hoc', title: 'Bài học KTCT', desc: 'Giá trị thặng dư, độc quyền, duy vật biện chứng, chủ nghĩa đế quốc...', icon: '📖' },
+  { to: '/triet-gia', title: 'Nhà tư tưởng', desc: 'Marx, Engels, Lenin, Socrates, Plato, Aristotle, Kant, Nietzsche...', icon: '📚' },
+  { to: '/khai-niem', title: 'Khái niệm', desc: 'Giá trị thặng dư, đấu tranh giai cấp, duy vật biện chứng, ý niệm...', icon: '💡' },
+  { to: '/so-sanh', title: 'So sánh tư tưởng', desc: 'Chọn hai nhà tư tưởng để so sánh quan điểm.', icon: '⚖' },
+  { to: '/thong-ke', title: 'Thống kê', desc: 'Nhà tư tưởng được hỏi nhiều nhất, chủ đề hot...', icon: '📊' },
 ];
 
 const PHILOSOPHER_NAMES = ['Karl Marx', 'Friedrich Engels', 'V.I. Lenin', 'Socrates', 'Plato', 'Aristotle', 'Kant', 'Nietzsche', 'Marcus Aurelius', 'Khổng Tử', 'Lão Tử', 'Descartes', 'Sartre'];
 
 const SCHOOL_ICONS = {
-  'Chủ nghĩa Mác (Marxism)': '\u2692',
-  'Chủ nghĩa Mác-Lênin': '\u2605',
-  'Triết học Hy Lạp cổ đại': '\u03A6',
-  'Khắc kỷ (Stoicism)': '\u2694',
-  'Khai sáng Đức': '\u2261',
-  'Hiện sinh': '\u221E',
-  'Nho giáo': '\u2609',
-  'Đạo giáo (Taoism)': '\u262F',
-  'Duy lý luận (Rationalism)': '\u222B',
-  'Chủ nghĩa Hiện sinh': '\u221E',
+  'Chủ nghĩa Mác (Marxism)': '⚒',
+  'Chủ nghĩa Mác-Lênin': '★',
+  'Triết học Hy Lạp cổ đại': '🏛',
+  'Khắc kỷ (Stoicism)': '🛡',
+  'Khai sáng Đức': '💡',
+  'Hiện sinh': '🌊',
+  'Nho giáo': '📜',
+  'Đạo giáo (Taoism)': '☯',
+  'Duy lý luận (Rationalism)': '🔬',
+  'Chủ nghĩa Hiện sinh': '🌊',
 };
 
 const KTCT_SCHOOLS = ['Chủ nghĩa Mác (Marxism)', 'Chủ nghĩa Mác-Lênin'];

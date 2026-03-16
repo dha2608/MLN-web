@@ -39,10 +39,10 @@ export default function Dashboard({ user }) {
   }
 
   const QUICK_ACTIONS = [
-    { to: '/triet-gia', icon: '\u03A6', title: 'Triết gia', desc: 'Khám phá các triết gia vĩ đại' },
-    { to: '/khai-niem', icon: '\u2234', title: 'Khái niệm', desc: 'Tìm hiểu khái niệm triết học' },
-    { to: '/trac-nghiem', icon: '?', title: 'Trắc nghiệm', desc: 'Bạn thuộc trường phái nào?' },
-    { to: '/so-sanh', icon: '\u21C4', title: 'So sánh', desc: 'So sánh hai triết gia' },
+    { to: '/bai-hoc', icon: '📖', title: 'Bài học KTCT', desc: 'Học kinh tế chính trị Mác-Lênin' },
+    { to: '/triet-gia', icon: '📚', title: 'Nhà tư tưởng', desc: 'Khám phá các nhà tư tưởng' },
+    { to: '/khai-niem', icon: '💡', title: 'Khái niệm', desc: 'Tìm hiểu khái niệm KTCT' },
+    { to: '/so-sanh', icon: '⚖', title: 'So sánh', desc: 'So sánh hai nhà tư tưởng' },
   ];
 
   return (

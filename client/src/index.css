@@ -1,4 +1,4 @@
-/* ========== Design system — Triết học (Premium) ========== */
+/* ========== Design system — KTCT Mác-Lênin (Premium) ========== */
 :root {
   /* Core palette */
   --bg: #faf9f6;
@@ -34,8 +34,8 @@
   --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
   --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #2c3e6b 100%);
   /* Typography */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-serif: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
   /* Spacing & radius */
   --radius-xs: 4px;
   --radius-sm: 8px;

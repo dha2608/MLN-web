@@ -40,7 +40,7 @@ export default function Compare() {
   return (
     <div className="page cmp-page">
       <div className="cmp-header stagger-1">
-        <span className="cmp-icon" aria-hidden="true">{'\u21C4'}</span>
+        <span className="cmp-icon" aria-hidden="true">⚖</span>
         <h1 className="page-title">So sánh tư tưởng</h1>
         <p className="page-desc">Chọn hai triết gia để so sánh quan điểm và tư tưởng chính.</p>
       </div>
@@ -115,7 +115,7 @@ export default function Compare() {
       {!comparison && !comparing && (
         <div className="cmp-empty stagger-3">
           <div className="empty-state">
-            <div className="empty-icon" aria-hidden="true">{'\u21C4'}</div>
+            <div className="empty-icon" aria-hidden="true">⚖</div>
             <p>Chọn hai triết gia ở trên để bắt đầu so sánh.</p>
           </div>
         </div>

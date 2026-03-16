@@ -70,11 +70,12 @@ export default function Footer() {
             <span className="footer-col-title">Khám phá</span>
             <nav className="footer-nav-links" aria-label="Footer navigation">
               <Link to="/">Trang chủ</Link>
+              <Link to="/bai-hoc">Bài học KTCT</Link>
               <Link to="/triet-gia">Nhà tư tưởng</Link>
               <Link to="/khai-niem">Khái niệm</Link>
-              <Link to="/trac-nghiem">Trắc nghiệm</Link>
               <Link to="/so-sanh">So sánh tư tưởng</Link>
               <Link to="/thong-ke">Thống kê</Link>
+              <Link to="/trac-nghiem">Trắc nghiệm trường phái</Link>
             </nav>
           </div>
 
@@ -82,21 +83,21 @@ export default function Footer() {
           <div className="footer-col">
             <span className="footer-col-title">Tính năng</span>
             <nav className="footer-nav-links">
+              <Link to="/bai-hoc">
+                <span className="footer-link-icon" aria-hidden="true">📖</span>
+                Bài học kinh tế chính trị
+              </Link>
               <Link to="/trac-nghiem">
                 <span className="footer-link-icon" aria-hidden="true">?</span>
-                Bạn thuộc trường phái nào?
+                Trắc nghiệm trường phái
               </Link>
               <Link to="/so-sanh">
-                <span className="footer-link-icon" aria-hidden="true">{'\u21C4'}</span>
+                <span className="footer-link-icon" aria-hidden="true">⚖</span>
                 So sánh nhà tư tưởng
               </Link>
               <Link to="/thong-ke">
-                <span className="footer-link-icon" aria-hidden="true">#</span>
+                <span className="footer-link-icon" aria-hidden="true">📊</span>
                 Thống kê tương tác
-              </Link>
-              <Link to="/dashboard">
-                <span className="footer-link-icon" aria-hidden="true">{'\u2692'}</span>
-                Dashboard cá nhân
               </Link>
             </nav>
           </div>
