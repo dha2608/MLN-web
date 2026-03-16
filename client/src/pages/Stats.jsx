@@ -7,34 +7,23 @@ export default function Stats() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
 
-  // Fetch only the data needed for the current tab
   useEffect(() => {
-    setLoading(true);
-    if (tab === 'users') {
-      Promise.all([
-        statsApi.overview(),
-        statsApi.engagement(),
-        statsApi.quizDistribution(),
-        statsApi.chatActivity(),
-        statsApi.topPhilosophers(),
-        statsApi.hotQuestions(),
-        statsApi.recentActivity(),
-      ]).then(([overview, engagement, quiz, chatAct, topP, hotQ, recent]) => {
-        setData(prev => ({ ...prev, overview, engagement, quiz, chatAct, topP, hotQ, recent }));
-        setLoading(false);
-      }).catch(() => setLoading(false));
-    } else {
-      Promise.all([
-        statsApi.overview(),
-        statsApi.schoolDistribution(),
-        statsApi.eraDistribution(),
-        statsApi.philosopherRichness(),
-      ]).then(([overview, schoolD, eraD, richness]) => {
-        setData(prev => ({ ...prev, overview, schoolD, eraD, richness }));
-        setLoading(false);
-      }).catch(() => setLoading(false));
-    }
-  }, [tab]);
+    Promise.all([
+      statsApi.overview(),
+      statsApi.engagement(),
+      statsApi.quizDistribution(),
+      statsApi.chatActivity(),
+      statsApi.topPhilosophers(),
+      statsApi.hotQuestions(),
+      statsApi.recentActivity(),
+      statsApi.schoolDistribution(),
+      statsApi.eraDistribution(),
+      statsApi.philosopherRichness(),
+    ]).then(([overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness]) => {
+      setData({ overview, engagement, quiz, chatAct, topP, hotQ, recent, schoolD, eraD, richness });
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
 
   if (loading) return (
     <div className="page page--narrow">
