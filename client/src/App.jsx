@@ -1,15 +1,17 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, useSearchParams, useLocation } from 'react-router-dom';
-import { auth, setToken, getToken } from './api';
+import { auth, setToken, getToken, stats as statsApi } from './api';
 import Layout from './components/Layout';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
-// Tự động cuộn lên đầu trang khi đổi route
+// Tự động cuộn lên đầu trang + track pageview khi đổi route
 function ScrollToTopOnNav() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Track page view (fire-and-forget)
+    statsApi.track(pathname);
   }, [pathname]);
   return null;
 }
