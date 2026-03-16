@@ -45,30 +45,30 @@ router.get('/overview', async (req, res) => {
       User.countDocuments(),
       ChatMessage.countDocuments({ role: 'user' }),
       User.aggregate([
-        { $project: { n: { $size: '$sessions' } } },
+        { $project: { n: { $size: { $ifNull: ['$sessions', []] } } } },
         { $group: { _id: null, total: { $sum: '$n' } } }
       ]).then(r => r[0]?.total || 0),
       Philosopher.countDocuments(),
       Concept.countDocuments(),
-      // PageView stats — use aggregation for reliable unique counts
-      PageView.countDocuments(),
-      PageView.countDocuments({ createdAt: { $gte: todayStart } }),
-      PageView.countDocuments({ createdAt: { $gte: weekAgo } }),
-      PageView.countDocuments({ createdAt: { $gte: monthAgo } }),
+      // PageView stats — each with individual catch to avoid breaking overview
+      PageView.countDocuments().catch(() => 0),
+      PageView.countDocuments({ createdAt: { $gte: todayStart } }).catch(() => 0),
+      PageView.countDocuments({ createdAt: { $gte: weekAgo } }).catch(() => 0),
+      PageView.countDocuments({ createdAt: { $gte: monthAgo } }).catch(() => 0),
       PageView.aggregate([
         { $group: { _id: '$visitorId' } },
         { $count: 'total' }
-      ]).then(r => r[0]?.total || 0),
+      ]).then(r => r[0]?.total || 0).catch(() => 0),
       PageView.aggregate([
         { $match: { createdAt: { $gte: todayStart } } },
         { $group: { _id: '$visitorId' } },
         { $count: 'total' }
-      ]).then(r => r[0]?.total || 0),
+      ]).then(r => r[0]?.total || 0).catch(() => 0),
       PageView.aggregate([
         { $match: { createdAt: { $gte: weekAgo } } },
         { $group: { _id: '$visitorId' } },
         { $count: 'total' }
-      ]).then(r => r[0]?.total || 0),
+      ]).then(r => r[0]?.total || 0).catch(() => 0),
     ]);
 
     // Count from static knowledge
