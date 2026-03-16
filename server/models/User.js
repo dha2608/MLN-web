@@ -15,4 +15,8 @@ const userSchema = new mongoose.Schema({
   contentViewed: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Concept' }]
 }, { timestamps: true });
 
+// Performance indexes
+userSchema.index({ lastLoginAt: -1 });
+userSchema.index({ visitCount: -1 });
+
 export default mongoose.model('User', userSchema);
