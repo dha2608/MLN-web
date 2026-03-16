@@ -8,4 +8,8 @@ const conceptSchema = new mongoose.Schema({
   school: { type: String, default: '' }
 }, { timestamps: true });
 
+// Performance indexes
+conceptSchema.index({ school: 1 });
+conceptSchema.index({ title: 1 });
+
 export default mongoose.model('Concept', conceptSchema);
