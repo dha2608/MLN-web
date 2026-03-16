@@ -2,6 +2,7 @@ import { Router } from 'express';
 import passport from '../config/passport.js';
 import { signToken } from '../utils/jwt.js';
 import { requireAuth } from '../middleware/auth.js';
+import User from '../models/User.js';
 
 const router = Router();
 
@@ -17,11 +18,18 @@ router.get('/google/callback',
   }
 );
 
-router.get('/me', requireAuth, (req, res) => {
-  const { _id, name, email, avatar, visitCount, lastLoginAt } = req.user;
-  res.json({
-    user: { id: _id, name, email, avatar, visitCount, lastLoginAt }
-  });
+router.get('/me', requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+      .select('_id name email avatar visitCount lastLoginAt')
+      .lean();
+    if (!user) return res.status(404).json({ error: 'Không tìm thấy người dùng' });
+    res.json({
+      user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar, visitCount: user.visitCount ?? 0, lastLoginAt: user.lastLoginAt }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.post('/logout', (req, res) => {

@@ -4,17 +4,24 @@ import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
-router.get('/profile', requireAuth, (req, res) => {
-  const u = req.user;
-  res.json({
-    id: u._id,
-    name: u.name,
-    email: u.email,
-    avatar: u.avatar,
-    visitCount: u.visitCount,
-    lastLoginAt: u.lastLoginAt,
-    sessionCount: u.sessions?.length || 0
-  });
+router.get('/profile', requireAuth, async (req, res) => {
+  try {
+    const u = await User.findById(req.user._id)
+      .select('_id name email avatar visitCount lastLoginAt sessions')
+      .lean();
+    if (!u) return res.status(404).json({ error: 'Không tìm thấy người dùng' });
+    res.json({
+      id: u._id,
+      name: u.name,
+      email: u.email,
+      avatar: u.avatar,
+      visitCount: u.visitCount ?? 0,
+      lastLoginAt: u.lastLoginAt,
+      sessionCount: u.sessions?.length || 0
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.post('/view-content', requireAuth, async (req, res) => {
