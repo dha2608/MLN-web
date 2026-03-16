@@ -28,13 +28,28 @@ export default function Home({ user }) {
   const [philosophers, setPhilosophers] = useState([]);
   const [schoolsList, setSchoolsList] = useState([]);
   const [timelineData, setTimelineData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    quote.daily().then(({ quote: q }) => setDailyQuote(q));
-    philApi.list().then(({ philosophers: p }) => setPhilosophers((p || []).slice(0, 5)));
-    schoolsApi.list().then(({ schools: s }) => setSchoolsList(s || [])).catch(() => {});
-    timelineApi.list().then(({ timeline: t }) => setTimelineData(t || [])).catch(() => {});
+    Promise.all([
+      quote.daily().catch(() => ({ quote: null })),
+      philApi.list().catch(() => ({ philosophers: [] })),
+      schoolsApi.list().catch(() => ({ schools: [] })),
+      timelineApi.list().catch(() => ({ timeline: [] })),
+    ]).then(([quoteRes, philRes, schoolRes, timelineRes]) => {
+      setDailyQuote(quoteRes.quote);
+      setPhilosophers((philRes.philosophers || []).slice(0, 5));
+      setSchoolsList(schoolRes.schools || []);
+      setTimelineData(timelineRes.timeline || []);
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) return (
+    <div className="page">
+      <div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải...</span></div>
+    </div>
+  );
 
   return (
     <div className="page page--wide home">
