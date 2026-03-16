@@ -1,6 +1,7 @@
 /**
- * Nội dung triết học cho chatbot - chỉ trả lời trong phạm vi này.
- * Từ chối lịch sự câu hỏi ngoài triết học.
+ * Nội dung kinh tế chính trị & triết học cho chatbot.
+ * Chủ đạo: Kinh tế chính trị Mác-Lênin (Marx, Engels, Lenin).
+ * Bổ sung: Triết học cổ điển (Socrates, Plato, Aristotle, Kant, Nietzsche, v.v.)
  */
 
 export const PHILOSOPHERS = {
@@ -352,6 +353,117 @@ export const PHILOSOPHERS = {
     ],
     influences: ['Husserl', 'Heidegger', 'Kierkegaard', 'Nietzsche', 'Marx'],
     influencedBy: ['Simone de Beauvoir', 'Albert Camus', 'Frantz Fanon', 'Triết học hậu hiện đại', 'Phong trào giải phóng']
+  },
+  karl_marx: {
+    name: 'Karl Marx',
+    nameVi: 'Các Mác',
+    birthDeath: '1818–1883',
+    era: 'Cận đại',
+    school: 'Chủ nghĩa Mác (Marxism)',
+    summary: 'Karl Marx (1818–1883) là nhà triết học, nhà kinh tế chính trị, nhà xã hội học và nhà cách mạng người Đức — người sáng lập chủ nghĩa Mác, một trong những hệ tư tưởng có ảnh hưởng sâu rộng nhất trong lịch sử nhân loại. Marx phát triển chủ nghĩa duy vật biện chứng và chủ nghĩa duy vật lịch sử — coi lịch sử xã hội là lịch sử đấu tranh giai cấp. Tác phẩm Tư bản (Das Kapital) phân tích cơ chế bóc lột giá trị thặng dư trong chủ nghĩa tư bản, chỉ ra mâu thuẫn nội tại dẫn đến sự sụp đổ tất yếu của nó. Cùng với Friedrich Engels, ông viết Tuyên ngôn của Đảng Cộng sản (1848) — văn kiện chính trị có ảnh hưởng nhất thế kỷ 19. Marx không chỉ giải thích thế giới mà kêu gọi cải tạo thế giới. Tư tưởng của ông là nền tảng lý luận của phong trào công nhân quốc tế, Cách mạng Tháng Mười Nga, và hệ thống xã hội chủ nghĩa trên toàn thế giới.',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/512px-Karl_Marx_001.jpg',
+    imageAlt: 'Chân dung Karl Marx, ảnh chụp năm 1875',
+    imageCaption: 'Chân dung Karl Marx — ảnh chụp bởi John Jabez Edwin Mayal, 1875',
+    imageSource: 'Wikimedia Commons — Public Domain',
+    imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Karl_Marx_001.jpg',
+    concepts: [
+      'Chủ nghĩa duy vật biện chứng: vận dụng phép biện chứng của Hegel trên nền tảng duy vật — mâu thuẫn nội tại là động lực phát triển của tự nhiên, xã hội và tư duy.',
+      'Chủ nghĩa duy vật lịch sử: tồn tại xã hội quyết định ý thức xã hội; lực lượng sản xuất và quan hệ sản xuất là nền tảng (hạ tầng cơ sở) quyết định kiến trúc thượng tầng (chính trị, pháp luật, tư tưởng).',
+      'Giá trị thặng dư: phần giá trị do lao động tạo ra vượt quá tiền lương nhận được — nguồn gốc lợi nhuận tư bản, cốt lõi của sự bóc lột.',
+      'Đấu tranh giai cấp: lịch sử loài người là lịch sử đấu tranh giữa các giai cấp có lợi ích đối kháng — chủ nô vs nô lệ, phong kiến vs nông nô, tư sản vs vô sản.',
+      'Sự tha hóa lao động (Alienation): trong chủ nghĩa tư bản, công nhân bị tha hóa khỏi sản phẩm lao động, quá trình lao động, bản chất con người và đồng loại.',
+      'Hàng hóa và tính chất hai mặt: mọi hàng hóa có giá trị sử dụng (thỏa mãn nhu cầu) và giá trị (lao động xã hội kết tinh) — mâu thuẫn cơ bản của sản xuất hàng hóa.'
+    ],
+    quotes: [
+      { text: 'Các nhà triết học đã chỉ giải thích thế giới bằng nhiều cách khác nhau; vấn đề là cải tạo thế giới.', source: 'Luận cương về Feuerbach (1845), Luận điểm 11' },
+      { text: 'Lịch sử tất cả các xã hội tồn tại từ trước đến nay là lịch sử đấu tranh giai cấp.', source: 'Tuyên ngôn của Đảng Cộng sản (1848)' },
+      { text: 'Vô sản tất cả các nước, đoàn kết lại!', source: 'Tuyên ngôn của Đảng Cộng sản (1848)' },
+      { text: 'Không phải ý thức con người quyết định tồn tại của họ, mà ngược lại, tồn tại xã hội quyết định ý thức của họ.', source: 'Góp phần phê phán kinh tế chính trị (1859)' },
+      { text: 'Tư bản ra đời, từ đầu đến chân, từ mọi lỗ chân lông, đều rỉ máu và bùn nhơ.', source: 'Tư bản, Quyển I (1867)' },
+      { text: 'Tôn giáo là thuốc phiện của nhân dân.', source: 'Góp phần phê phán triết học pháp quyền của Hegel (1844)' }
+    ],
+    works: [
+      { title: 'Tư bản (Das Kapital)', year: '1867–1894', description: 'Kiệt tác kinh tế chính trị phân tích quy luật vận động của chủ nghĩa tư bản: hàng hóa, giá trị, giá trị thặng dư, tích lũy tư bản và mâu thuẫn nội tại. Quyển I xuất bản năm 1867, Quyển II–III do Engels biên tập và xuất bản sau khi Marx mất.' },
+      { title: 'Tuyên ngôn của Đảng Cộng sản', year: '1848', description: 'Văn kiện chính trị viết cùng Engels, trình bày lý luận đấu tranh giai cấp, phê phán chủ nghĩa tư bản và kêu gọi cách mạng vô sản. Một trong những văn bản có ảnh hưởng nhất lịch sử.' },
+      { title: 'Bản thảo Kinh tế-Triết học 1844', year: '1844', description: 'Phân tích sự tha hóa lao động trong chủ nghĩa tư bản và mối quan hệ giữa triết học, kinh tế và xã hội.' },
+      { title: 'Hệ tư tưởng Đức (Die Deutsche Ideologie)', year: '1846', description: 'Viết cùng Engels, trình bày chủ nghĩa duy vật lịch sử lần đầu tiên một cách có hệ thống.' },
+      { title: 'Góp phần phê phán kinh tế chính trị', year: '1859', description: 'Trình bày nền tảng phương pháp luận cho Tư bản, gồm lý luận về hàng hóa và tiền tệ.' }
+    ],
+    influences: ['Hegel', 'Ludwig Feuerbach', 'Adam Smith', 'David Ricardo', 'Triết học Khai sáng Pháp'],
+    influencedBy: ['Friedrich Engels', 'V.I. Lenin', 'Hồ Chí Minh', 'Phong trào cộng sản quốc tế', 'Xã hội học hiện đại']
+  },
+  friedrich_engels: {
+    name: 'Friedrich Engels',
+    nameVi: 'Phriđơrich Ăngghen',
+    birthDeath: '1820–1895',
+    era: 'Cận đại',
+    school: 'Chủ nghĩa Mác (Marxism)',
+    summary: 'Friedrich Engels (1820–1895) là nhà triết học, nhà kinh tế chính trị và nhà cách mạng người Đức — người bạn chiến đấu thân thiết nhất và đồng sáng lập chủ nghĩa Mác cùng Karl Marx. Engels không chỉ hỗ trợ tài chính cho Marx suốt đời mà còn có những đóng góp lý luận độc lập quan trọng. Ông phát triển phép biện chứng của tự nhiên, phân tích nguồn gốc gia đình, chế độ tư hữu và nhà nước, đồng thời hệ thống hóa chủ nghĩa xã hội khoa học trong tác phẩm Chống Đuy-rinh. Sau khi Marx mất (1883), Engels biên tập và xuất bản Quyển II–III của Tư bản, bảo vệ và phổ biến di sản tư tưởng Mác. Ông là nhà lý luận bậc thầy về phép biện chứng duy vật ứng dụng vào tự nhiên và xã hội.',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Friedrich_Engels_portrait_%28cropped%29.jpg/512px-Friedrich_Engels_portrait_%28cropped%29.jpg',
+    imageAlt: 'Chân dung Friedrich Engels',
+    imageCaption: 'Chân dung Friedrich Engels — ảnh chụp khoảng năm 1870',
+    imageSource: 'Wikimedia Commons — Public Domain',
+    imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Friedrich_Engels_portrait_(cropped).jpg',
+    concepts: [
+      'Phép biện chứng của tự nhiên: ba quy luật cơ bản — quy luật thống nhất và đấu tranh của các mặt đối lập, quy luật chuyển hóa từ lượng sang chất, quy luật phủ định của phủ định.',
+      'Chủ nghĩa xã hội khoa học: phân biệt với chủ nghĩa xã hội không tưởng (utopian); xây dựng trên nền tảng duy vật lịch sử và kinh tế chính trị.',
+      'Nguồn gốc gia đình, chế độ tư hữu và nhà nước: gia đình, tư hữu và nhà nước không phải vĩnh cửu mà là sản phẩm lịch sử, ra đời cùng sự phân chia giai cấp.',
+      'Lao động tạo ra con người: quá trình lao động sản xuất là nhân tố quyết định trong sự tiến hóa từ vượn thành người.',
+      'Vai trò của bạo lực trong lịch sử: bạo lực là "bà đỡ" của lịch sử — đóng vai trò cách mạng khi quan hệ sản xuất cũ kìm hãm lực lượng sản xuất mới.'
+    ],
+    quotes: [
+      { text: 'Lao động là điều kiện cơ bản đầu tiên của toàn bộ đời sống loài người, đến mức mà, theo một nghĩa nào đó, chúng ta phải nói: lao động đã tạo ra con người.', source: 'Vai trò của lao động trong quá trình chuyển biến từ vượn thành người (1876)' },
+      { text: 'Tự do là nhận thức được tất yếu.', source: 'Chống Đuy-rinh (Anti-Dühring, 1878)' },
+      { text: 'Một ounce hành động có giá trị hơn hàng tấn lý thuyết.', source: 'Thư gửi F. Kelley-Wischnewetzky (1887)' },
+      { text: 'Nhà nước không phải là cái gì khác ngoài bộ máy trấn áp của một giai cấp đối với giai cấp khác.', source: 'Nguồn gốc gia đình, chế độ tư hữu và nhà nước (1884)' }
+    ],
+    works: [
+      { title: 'Chống Đuy-rinh (Anti-Dühring)', year: '1878', description: 'Trình bày có hệ thống ba bộ phận cấu thành chủ nghĩa Mác: triết học (duy vật biện chứng), kinh tế chính trị và chủ nghĩa xã hội khoa học.' },
+      { title: 'Biện chứng của tự nhiên (Dialektik der Natur)', year: '1883', description: 'Áp dụng phép biện chứng duy vật vào các khoa học tự nhiên, chứng minh tự nhiên vận động theo quy luật biện chứng.' },
+      { title: 'Nguồn gốc gia đình, chế độ tư hữu và nhà nước', year: '1884', description: 'Phân tích sự hình thành gia đình, tư hữu và nhà nước từ góc nhìn duy vật lịch sử.' },
+      { title: 'Tình cảnh giai cấp công nhân Anh', year: '1845', description: 'Nghiên cứu thực địa đầu tiên về điều kiện sống và lao động của giai cấp công nhân trong cách mạng công nghiệp.' },
+      { title: 'Ludwig Feuerbach và sự cáo chung của triết học cổ điển Đức', year: '1886', description: 'Tổng kết quá trình phát triển từ triết học Hegel qua Feuerbach đến chủ nghĩa duy vật biện chứng.' }
+    ],
+    influences: ['Karl Marx', 'Hegel', 'Ludwig Feuerbach', 'Charles Darwin', 'Kinh tế chính trị cổ điển Anh'],
+    influencedBy: ['V.I. Lenin', 'Rosa Luxemburg', 'Chủ nghĩa Mác-Lênin', 'Phong trào công nhân quốc tế']
+  },
+  lenin: {
+    name: 'Vladimir Ilyich Lenin',
+    nameVi: 'V.I. Lênin',
+    birthDeath: '1870–1924',
+    era: 'Hiện đại',
+    school: 'Chủ nghĩa Mác-Lênin',
+    summary: 'Vladimir Ilyich Lenin (1870–1924) là nhà lý luận chính trị, nhà cách mạng và lãnh tụ của Cách mạng xã hội chủ nghĩa Tháng Mười Nga 1917 — sự kiện mở ra thời đại mới trong lịch sử nhân loại. Lenin phát triển chủ nghĩa Mác thành chủ nghĩa Mác-Lênin, bổ sung lý luận về chủ nghĩa đế quốc là giai đoạn tột cùng của chủ nghĩa tư bản, vai trò đảng tiên phong của giai cấp vô sản, nguyên tắc tập trung dân chủ và nhà nước chuyên chính vô sản. Tác phẩm "Chủ nghĩa đế quốc, giai đoạn tột cùng của chủ nghĩa tư bản" (1917) phân tích sự chuyển biến từ tư bản tự do cạnh tranh sang tư bản độc quyền. Lenin chứng minh cách mạng vô sản có thể thắng lợi ở một nước riêng lẻ — khâu yếu nhất trong chuỗi đế quốc. Tư tưởng của ông là nền tảng lý luận cho Liên Xô và phong trào giải phóng dân tộc trên toàn thế giới, bao gồm cách mạng Việt Nam.',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Lenin_1920_%28cropped%29.jpg/512px-Lenin_1920_%28cropped%29.jpg',
+    imageAlt: 'Chân dung V.I. Lenin, ảnh chụp năm 1920',
+    imageCaption: 'Chân dung V.I. Lenin — ảnh chụp tại Moskva, 1920',
+    imageSource: 'Wikimedia Commons — Public Domain',
+    imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Lenin_1920_(cropped).jpg',
+    concepts: [
+      'Chủ nghĩa đế quốc là giai đoạn tột cùng của chủ nghĩa tư bản: tư bản phát triển đến giai đoạn độc quyền, xuất khẩu tư bản, phân chia thế giới giữa các cường quốc — tạo điều kiện cho cách mạng vô sản.',
+      'Đảng tiên phong (Vanguard Party): giai cấp công nhân cần một đảng cách mạng có tổ chức chặt chẽ, được vũ trang bằng lý luận Mác-xít, để lãnh đạo cuộc đấu tranh.',
+      'Tập trung dân chủ: nguyên tắc tổ chức đảng — tự do thảo luận, thống nhất hành động; thiểu số phục tùng đa số, cấp dưới phục tùng cấp trên.',
+      'Nhà nước và cách mạng: nhà nước là công cụ thống trị giai cấp; cách mạng vô sản đập tan bộ máy nhà nước tư sản, thiết lập chuyên chính vô sản.',
+      'Lý luận phản ánh (Theory of Reflection): nhận thức là sự phản ánh thế giới khách quan vào ý thức con người — vật chất có trước, ý thức có sau.',
+      'Cách mạng ở khâu yếu nhất: cách mạng vô sản không nhất thiết nổ ra ở nước tư bản phát triển nhất mà ở nơi mâu thuẫn tập trung gay gắt nhất.'
+    ],
+    quotes: [
+      { text: 'Không có lý luận cách mạng thì không có phong trào cách mạng.', source: 'Làm gì? (Chto delat?, 1902)' },
+      { text: 'Học, học nữa, học mãi.', source: 'Qua truyền thống, thường được gán cho Lenin' },
+      { text: 'Chủ nghĩa đế quốc là giai đoạn tột cùng của chủ nghĩa tư bản.', source: 'Chủ nghĩa đế quốc, giai đoạn tột cùng của chủ nghĩa tư bản (1917)' },
+      { text: 'Trong khi nhà nước tồn tại thì không có tự do. Khi có tự do thì sẽ không còn nhà nước.', source: 'Nhà nước và cách mạng (1917)' },
+      { text: 'Thực tiễn là tiêu chuẩn của chân lý.', source: 'Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán (1909)' },
+      { text: 'Chính trị là biểu hiện tập trung nhất của kinh tế.', source: 'Bệnh ấu trĩ "tả khuynh" trong phong trào cộng sản (1920)' }
+    ],
+    works: [
+      { title: 'Chủ nghĩa đế quốc, giai đoạn tột cùng của chủ nghĩa tư bản', year: '1917', description: 'Phân tích sự chuyển biến từ tư bản tự do cạnh tranh sang tư bản độc quyền, năm đặc điểm kinh tế của chủ nghĩa đế quốc.' },
+      { title: 'Nhà nước và cách mạng (Gosudarstvo i revolyutsiya)', year: '1917', description: 'Phân tích bản chất giai cấp của nhà nước, luận giải sự cần thiết của chuyên chính vô sản và sự tiêu vong của nhà nước.' },
+      { title: 'Làm gì? (Chto delat?)', year: '1902', description: 'Trình bày lý luận về đảng cách mạng kiểu mới — đảng tiên phong của giai cấp công nhân.' },
+      { title: 'Chủ nghĩa duy vật và chủ nghĩa kinh nghiệm phê phán', year: '1909', description: 'Bảo vệ triết học duy vật biện chứng, phê phán chủ nghĩa duy tâm chủ quan và thuyết bất khả tri.' },
+      { title: 'Bút ký triết học', year: '1914–1916', description: 'Ghi chép nghiên cứu logic biện chứng của Hegel, phát triển phép biện chứng duy vật.' }
+    ],
+    influences: ['Karl Marx', 'Friedrich Engels', 'Hegel', 'Chernyshevsky', 'Plekhanov'],
+    influencedBy: ['Hồ Chí Minh', 'Mao Trạch Đông', 'Fidel Castro', 'Phong trào giải phóng dân tộc', 'Hệ thống xã hội chủ nghĩa thế giới']
   }
 };
 
@@ -373,15 +485,43 @@ export const TIMELINE = [
   { year: '1641', event: 'Descartes xuất bản Suy ngẫm về Triết học Đệ nhất', philosopher: 'Descartes', era: 'Cận đại' },
   { year: '1724', event: 'Immanuel Kant sinh tại Königsberg, Phổ', philosopher: 'Kant', era: 'Cận đại' },
   { year: '1781', event: 'Kant xuất bản Phê phán Lý tính Thuần túy', philosopher: 'Kant', era: 'Cận đại' },
+  { year: '1818', event: 'Karl Marx sinh tại Trier, Phổ', philosopher: 'Karl Marx', era: 'Cận đại' },
+  { year: '1820', event: 'Friedrich Engels sinh tại Barmen, Phổ', philosopher: 'Friedrich Engels', era: 'Cận đại' },
   { year: '1844', event: 'Friedrich Nietzsche sinh tại Röcken, Phổ', philosopher: 'Nietzsche', era: 'Cận đại' },
+  { year: '1845', event: 'Marx viết Luận cương về Feuerbach — "Vấn đề là cải tạo thế giới"', philosopher: 'Karl Marx', era: 'Cận đại' },
+  { year: '1848', event: 'Marx và Engels xuất bản Tuyên ngôn của Đảng Cộng sản', philosopher: 'Karl Marx', era: 'Cận đại' },
+  { year: '1867', event: 'Marx xuất bản Tư bản Quyển I — phân tích giá trị thặng dư', philosopher: 'Karl Marx', era: 'Cận đại' },
+  { year: '1870', event: 'V.I. Lenin sinh tại Simbirsk, Nga', philosopher: 'V.I. Lenin', era: 'Hiện đại' },
+  { year: '1878', event: 'Engels xuất bản Chống Đuy-rinh — hệ thống hóa chủ nghĩa Mác', philosopher: 'Friedrich Engels', era: 'Cận đại' },
+  { year: '1883', event: 'Marx mất tại London; Engels bắt đầu biên tập Tư bản Quyển II–III', philosopher: 'Karl Marx', era: 'Cận đại' },
+  { year: '1884', event: 'Engels xuất bản Nguồn gốc gia đình, chế độ tư hữu và nhà nước', philosopher: 'Friedrich Engels', era: 'Cận đại' },
   { year: '1883', event: 'Nietzsche bắt đầu viết Zarathustra đã nói như thế', philosopher: 'Nietzsche', era: 'Cận đại' },
+  { year: '1902', event: 'Lenin viết Làm gì? — lý luận đảng tiên phong', philosopher: 'V.I. Lenin', era: 'Hiện đại' },
   { year: '1905', event: 'Jean-Paul Sartre sinh tại Paris, Pháp', philosopher: 'Sartre', era: 'Hiện đại' },
+  { year: '1917', event: 'Lenin xuất bản Chủ nghĩa đế quốc, giai đoạn tột cùng của CNTB', philosopher: 'V.I. Lenin', era: 'Hiện đại' },
+  { year: '1917', event: 'Cách mạng Tháng Mười Nga thắng lợi — mở ra thời đại mới', philosopher: 'V.I. Lenin', era: 'Hiện đại' },
   { year: '1943', event: 'Sartre xuất bản Tồn tại và Hư vô — kiệt tác hiện sinh', philosopher: 'Sartre', era: 'Hiện đại' },
   { year: '1964', event: 'Sartre từ chối giải Nobel Văn học', philosopher: 'Sartre', era: 'Hiện đại' }
 ];
 
 /** Chi tiết các trường phái */
 export const SCHOOLS_DETAIL = {
+  'Chủ nghĩa Mác (Marxism)': {
+    name: 'Chủ nghĩa Mác (Marxism)',
+    era: 'Thế kỷ 19 – nay',
+    description: 'Hệ thống lý luận do Karl Marx và Friedrich Engels sáng lập, bao gồm ba bộ phận: triết học Mác-xít (chủ nghĩa duy vật biện chứng và duy vật lịch sử), kinh tế chính trị Mác-xít (lý luận giá trị thặng dư), và chủ nghĩa xã hội khoa học. Chủ nghĩa Mác là vũ khí lý luận của giai cấp công nhân trong cuộc đấu tranh xóa bỏ áp bức, bóc lột.',
+    keyIdeas: ['Chủ nghĩa duy vật biện chứng', 'Chủ nghĩa duy vật lịch sử', 'Giá trị thặng dư', 'Đấu tranh giai cấp', 'Chủ nghĩa xã hội khoa học'],
+    philosophers: ['Karl Marx', 'Friedrich Engels'],
+    icon: '\u2692'
+  },
+  'Chủ nghĩa Mác-Lênin': {
+    name: 'Chủ nghĩa Mác-Lênin',
+    era: 'Thế kỷ 20 – nay',
+    description: 'Sự phát triển sáng tạo chủ nghĩa Mác bởi V.I. Lenin trong điều kiện chủ nghĩa đế quốc và cách mạng vô sản. Bổ sung lý luận về đảng tiên phong, chủ nghĩa đế quốc, chuyên chính vô sản, tập trung dân chủ và khả năng thắng lợi của cách mạng ở một nước riêng lẻ. Là nền tảng tư tưởng của Đảng Cộng sản Việt Nam.',
+    keyIdeas: ['Chủ nghĩa đế quốc', 'Đảng tiên phong', 'Tập trung dân chủ', 'Chuyên chính vô sản', 'Cách mạng ở khâu yếu nhất'],
+    philosophers: ['V.I. Lenin', 'Karl Marx', 'Friedrich Engels'],
+    icon: '\u2605'
+  },
   'Triết học Hy Lạp cổ đại': {
     name: 'Triết học Hy Lạp cổ đại',
     era: 'Thế kỷ 6–3 TCN',
@@ -441,6 +581,10 @@ export const SCHOOLS_DETAIL = {
 };
 
 export const SCHOOLS = {
+  'chủ nghĩa mác': 'Chủ nghĩa Mác (Marxism): Karl Marx, Friedrich Engels – chủ nghĩa duy vật biện chứng, duy vật lịch sử, giá trị thặng dư, đấu tranh giai cấp, chủ nghĩa xã hội khoa học.',
+  'chủ nghĩa mác-lênin': 'Chủ nghĩa Mác-Lênin: Lenin phát triển sáng tạo chủ nghĩa Mác – lý luận chủ nghĩa đế quốc, đảng tiên phong, tập trung dân chủ, chuyên chính vô sản.',
+  'marxism': 'Marxism: Karl Marx, Friedrich Engels – dialectical materialism, historical materialism, surplus value, class struggle.',
+  'kinh tế chính trị': 'Kinh tế chính trị Mác-xít: nghiên cứu quan hệ sản xuất, quy luật kinh tế khách quan của xã hội – hàng hóa, giá trị, giá trị thặng dư, tích lũy tư bản.',
   'hy lạp cổ đại': 'Triết học Hy Lạp cổ đại: Socrates, Plato, Aristotle – tập trung vào đạo đức, siêu hình học, logic.',
   'khắc kỷ': 'Khắc kỷ (Stoicism): Marcus Aurelius, Epictetus, Seneca – chấp nhận số phận, kiểm soát cảm xúc, sống theo lý tính.',
   'khai sáng': 'Khai sáng Đức: Kant – lý tính, đạo đức bổn phận, phê phán tri thức.',
@@ -451,6 +595,16 @@ export const SCHOOLS = {
 };
 
 export const CONCEPTS = {
+  'giá trị thặng dư': 'Giá trị thặng dư (Karl Marx): phần giá trị do công nhân tạo ra vượt quá giá trị sức lao động (tiền lương) — nguồn gốc lợi nhuận của nhà tư bản, cốt lõi của sự bóc lột trong chủ nghĩa tư bản. Đây là phát kiến vĩ đại nhất của Marx trong kinh tế chính trị.',
+  'đấu tranh giai cấp': 'Đấu tranh giai cấp (Marx-Engels): lịch sử loài người là lịch sử đấu tranh giữa các giai cấp có lợi ích đối kháng — chủ nô vs nô lệ, phong kiến vs nông nô, tư sản vs vô sản. Đấu tranh giai cấp là động lực phát triển xã hội có giai cấp.',
+  'duy vật biện chứng': 'Chủ nghĩa duy vật biện chứng (Marx-Engels): thế giới quan và phương pháp luận khoa học — vật chất có trước ý thức, thế giới vận động theo quy luật biện chứng (thống nhất đối lập, lượng-chất, phủ định của phủ định).',
+  'duy vật lịch sử': 'Chủ nghĩa duy vật lịch sử (Marx): tồn tại xã hội quyết định ý thức xã hội; lực lượng sản xuất và quan hệ sản xuất (hạ tầng cơ sở) quyết định kiến trúc thượng tầng (chính trị, pháp luật, tư tưởng).',
+  'tư liệu sản xuất': 'Tư liệu sản xuất (Marx): tổng thể các yếu tố vật chất mà con người sử dụng để sản xuất — gồm đối tượng lao động và tư liệu lao động. Ai sở hữu tư liệu sản xuất, người đó nắm quyền lực kinh tế.',
+  'hàng hóa': 'Hàng hóa (Marx): sản phẩm của lao động có thể trao đổi trên thị trường, có hai thuộc tính — giá trị sử dụng (thỏa mãn nhu cầu) và giá trị (lao động xã hội cần thiết kết tinh). Đây là tế bào kinh tế của chủ nghĩa tư bản.',
+  'chủ nghĩa đế quốc': 'Chủ nghĩa đế quốc (Lenin): giai đoạn tột cùng của chủ nghĩa tư bản — tư bản phát triển đến mức độc quyền, xuất khẩu tư bản, phân chia thế giới giữa các cường quốc. Tạo điều kiện cho cách mạng vô sản.',
+  'chuyên chính vô sản': 'Chuyên chính vô sản (Marx-Lenin): nhà nước của giai cấp công nhân sau cách mạng — thực hiện dân chủ cho đa số nhân dân lao động, trấn áp thiểu số bóc lột, xây dựng chủ nghĩa xã hội.',
+  'tha hóa lao động': 'Sự tha hóa lao động (Marx): trong chủ nghĩa tư bản, công nhân bị tha hóa khỏi sản phẩm lao động, quá trình lao động, bản chất loài của con người và đồng loại — lao động trở thành phương tiện sinh tồn thay vì biểu hiện bản chất sáng tạo.',
+  'phép biện chứng': 'Phép biện chứng duy vật (Marx-Engels): phương pháp tư duy nhìn sự vật trong mối liên hệ phổ biến và sự phát triển không ngừng — ba quy luật: thống nhất và đấu tranh các mặt đối lập, chuyển hóa lượng-chất, phủ định của phủ định.',
   'ý niệm': 'Thuyết ý niệm (Plato): các ý niệm là thực tại đích thực, bất biến; thế giới cảm tính chỉ là bản sao không hoàn hảo.',
   'đối thoại': 'Phương pháp đối thoại Socrates: đặt câu hỏi để đối phương tự phát hiện mâu thuẫn và đi tới định nghĩa.',
   'logic': 'Logic học Aristotle: tam đoạn luận, phạm trù; nền tảng cho tư duy có hệ thống.',
@@ -470,9 +624,10 @@ export const CONCEPTS = {
 };
 
 const OFF_TOPIC_KEYWORDS = [
-  'chính trị hiện đại', 'bầu cử', 'đảng phái', 'chính phủ hiện tại',
+  'bầu cử', 'đảng phái', 'chính phủ hiện tại',
   'đời tư', 'tin tức', 'giải trí', 'thể thao', 'âm nhạc', 'phim',
-  'nấu ăn', 'du lịch', 'mua sắm', 'cổ phiếu', 'tiền ảo', 'crypto'
+  'nấu ăn', 'du lịch', 'mua sắm', 'cổ phiếu', 'tiền ảo', 'crypto',
+  'game', 'thời tiết', 'bóng đá', 'tiktok', 'youtube'
 ];
 
 function normalize(text) {
@@ -483,10 +638,47 @@ function isOffTopic(query) {
   const n = normalize(query);
   if (OFF_TOPIC_KEYWORDS.some(k => n.includes(normalize(k)))) return true;
   if (n.length < 4) return true;
-  const philosophyTerms = ['triết', 'philosoph', 'socrates', 'plato', 'aristotle', 'kant', 'nietzsche', 'đạo đức', 'ý niệm', 'logic', 'khắc kỷ', 'nho', 'tư tưởng', 'quan điểm', 'trường phái', 'triết gia', 'khái niệm', 'siêu hình', 'moral', 'ethics', 'virtue', 'concept', 'marcus', 'khổng', 'confucius', 'aurelius', 'lão tử', 'lao tzu', 'đạo giáo', 'taoism', 'descartes', 'cogito', 'duy lý', 'sartre', 'hiện sinh', 'existential', 'vô vi', 'tồn tại', 'bản chất', 'tự do', 'bổn phận', 'nhị nguyên', 'hoài nghi'];
+  // Kinh tế chính trị + triết học mở rộng
+  const philosophyTerms = [
+    // Kinh tế chính trị Mác-Lênin (chủ đạo)
+    'marx', 'mác', 'mac', 'các mác', 'karl marx',
+    'engels', 'ăngghen', 'angghen', 'ăng ghen',
+    'lenin', 'lênin', 'le nin',
+    'kinh tế chính trị', 'kinh te chinh tri', 'ktct',
+    'giá trị thặng dư', 'gia tri thang du', 'thặng dư',
+    'đấu tranh giai cấp', 'giai cấp', 'giai cap',
+    'tư bản', 'tu ban', 'chủ nghĩa tư bản', 'tư sản', 'vô sản',
+    'duy vật biện chứng', 'duy vật lịch sử', 'duy vật',
+    'biện chứng', 'bien chung',
+    'tư liệu sản xuất', 'quan hệ sản xuất', 'lực lượng sản xuất',
+    'hàng hóa', 'hang hoa', 'sức lao động',
+    'chủ nghĩa đế quốc', 'đế quốc', 'de quoc',
+    'chuyên chính vô sản', 'chuyên chính',
+    'cách mạng', 'cach mang', 'cộng sản', 'xã hội chủ nghĩa',
+    'tuyên ngôn', 'tuyên ngôn cộng sản',
+    'bóc lột', 'boc lot', 'tha hóa', 'tha hoa',
+    'hạ tầng cơ sở', 'kiến trúc thượng tầng',
+    'tích lũy tư bản', 'tập trung dân chủ',
+    'đảng tiên phong', 'nhà nước',
+    'chống đuy-rinh', 'chống đuyrinh', 'anti-dühring',
+    // Triết học nền tảng
+    'triết', 'philosoph', 'socrates', 'plato', 'aristotle', 'kant', 'nietzsche',
+    'đạo đức', 'ý niệm', 'logic', 'khắc kỷ', 'nho', 'tư tưởng', 'quan điểm',
+    'trường phái', 'triết gia', 'khái niệm', 'siêu hình', 'moral', 'ethics',
+    'virtue', 'concept', 'marcus', 'khổng', 'confucius', 'aurelius',
+    'lão tử', 'lao tzu', 'đạo giáo', 'taoism', 'descartes', 'cogito',
+    'duy lý', 'sartre', 'hiện sinh', 'existential', 'vô vi', 'tồn tại',
+    'bản chất', 'tự do', 'bổn phận', 'nhị nguyên', 'hoài nghi',
+    // Mở rộng — câu hỏi thông thường về triết gia
+    'sinh năm', 'sinh nào', 'mất năm', 'tiểu sử', 'cuộc đời', 'tác phẩm',
+    'trích dẫn', 'câu nói', 'ảnh hưởng', 'đóng góp', 'lý thuyết', 'học thuyết',
+    'nguyên lý', 'quy luật', 'phương pháp', 'phê phán'
+  ];
   const hasPhilosophy = philosophyTerms.some(t => n.includes(normalize(t)));
-  if (!hasPhilosophy && n.split(/\s+/).length < 3) return true;
-  return false;
+  if (hasPhilosophy) return false;
+  // Nới lỏng: câu dài >= 5 từ cho phép qua (người dùng đang hỏi nghiêm túc)
+  if (n.split(/\s+/).length >= 5) return false;
+  return true;
 }
 
 function detectTopic(query) {
@@ -536,22 +728,22 @@ function getPhilosophyReply(query) {
   }
 
   if (/trường phái|school|phái/.test(n)) {
-    return '**Các trường phái triết học** thường gặp: Hy Lạp cổ đại (Socrates, Plato, Aristotle), Khắc kỷ (Marcus Aurelius), Khai sáng (Kant), Hiện sinh (Nietzsche), Nho giáo (Khổng Tử). Bạn muốn tìm hiểu trường phái nào?';
+    return '**Các trường phái** chính: Chủ nghĩa Mác (Marx, Engels), Chủ nghĩa Mác-Lênin (Lenin), Hy Lạp cổ đại (Socrates, Plato, Aristotle), Khắc kỷ (Marcus Aurelius), Khai sáng (Kant), Hiện sinh (Nietzsche, Sartre), Nho giáo (Khổng Tử), Đạo giáo (Lão Tử). Bạn muốn tìm hiểu trường phái nào?';
   }
   if (/khái niệm|concept|định nghĩa/.test(n)) {
-    return 'Một số **khái niệm triết học** quen thuộc: ý niệm, đối thoại, logic, bổn phận, siêu nhân, ý chí quyền lực, trung đạo, eudaimonia, mệnh lệnh nhất quyết. Bạn quan tâm khái niệm nào?';
+    return 'Một số **khái niệm** quan trọng: giá trị thặng dư, đấu tranh giai cấp, duy vật biện chứng, duy vật lịch sử, chủ nghĩa đế quốc, chuyên chính vô sản, tha hóa lao động, ý niệm, mệnh lệnh nhất quyết, cogito, vô vi, siêu nhân. Bạn quan tâm khái niệm nào?';
   }
-  if (/triết gia|philosopher|nhà triết/.test(n)) {
-    return 'Trong phạm vi này tôi có thể nói về **Socrates, Plato, Aristotle, Kant, Nietzsche, Marcus Aurelius, Khổng Tử**. Bạn muốn hỏi về ai?';
+  if (/triết gia|philosopher|nhà triết|nhà tư tưởng/.test(n)) {
+    return 'Các nhà tư tưởng trong hệ thống: **Karl Marx, Friedrich Engels, V.I. Lenin** (kinh tế chính trị), Socrates, Plato, Aristotle, Kant, Nietzsche, Marcus Aurelius, Khổng Tử, Lão Tử, Descartes, Sartre. Bạn muốn hỏi về ai?';
   }
 
-  return 'Câu hỏi của bạn liên quan đến **triết học** nhưng chưa đủ cụ thể. Bạn có thể hỏi về một triết gia (ví dụ Socrates, Kant), một trường phái (Khắc kỷ, Nho giáo), hoặc khái niệm (ý niệm, bổn phận, siêu nhân). Tôi sẽ cố gắng trả lời trong phạm vi đó.';
+  return 'Câu hỏi của bạn liên quan đến **triết học / kinh tế chính trị** nhưng chưa đủ cụ thể. Bạn có thể hỏi về:\n• **Kinh tế chính trị**: Marx, Engels, Lenin, giá trị thặng dư, đấu tranh giai cấp, duy vật biện chứng\n• **Triết học**: Socrates, Kant, Nietzsche, Khổng Tử, Lão Tử\n• **Trường phái**: Chủ nghĩa Mác, Mác-Lênin, Khắc kỷ, Hiện sinh, Nho giáo\nTôi sẽ cố gắng trả lời trong phạm vi đó.';
 }
 
 export function getChatResponse(query, userId) {
   if (isOffTopic(query)) {
     return {
-      content: 'Xin lỗi, tôi chỉ được phép trả lời các câu hỏi trong phạm vi **triết học** (triết gia, trường phái, khái niệm, phân tích tư tưởng). Câu hỏi của bạn nằm ngoài phạm vi này. Bạn có muốn hỏi về Socrates, Plato, Kant, Nietzsche, hay một chủ đề triết học nào khác không?',
+      content: 'Xin lỗi, tôi chỉ trả lời các câu hỏi trong phạm vi **kinh tế chính trị** và **triết học** (triết gia, trường phái, khái niệm, phân tích tư tưởng). Bạn có thể hỏi về Marx, Engels, Lenin, giá trị thặng dư, đấu tranh giai cấp, hoặc các triết gia như Socrates, Kant, Nietzsche, Khổng Tử.',
       topicDetected: 'off-topic',
       rejected: true
     };
@@ -562,19 +754,19 @@ export function getChatResponse(query, userId) {
 }
 
 export const SAMPLE_QUESTIONS = [
-  'Socrates và phương pháp đối thoại là gì?',
-  'Plato nói gì về thuyết ý niệm?',
-  'Aristotle và logic học',
+  'Karl Marx và giá trị thặng dư là gì?',
+  'Chủ nghĩa duy vật biện chứng là gì?',
+  'Lenin và chủ nghĩa đế quốc',
+  'Engels và phép biện chứng của tự nhiên',
+  'So sánh Marx và Lenin',
+  'Đấu tranh giai cấp là gì?',
+  'Tuyên ngôn Đảng Cộng sản nói gì?',
+  'Chủ nghĩa duy vật lịch sử khác gì duy vật biện chứng?',
+  'Socrates và phương pháp đối thoại',
   'Kant và đạo đức học bổn phận',
   'Nietzsche – siêu nhân và ý chí quyền lực',
-  'So sánh Plato và Aristotle',
-  'Khắc kỷ là gì?',
-  'Khái niệm trung đạo của Aristotle',
   'Lão Tử và Đạo là gì?',
-  'Vô vi trong Đạo giáo nghĩa là gì?',
-  'Descartes và Cogito ergo sum',
+  'So sánh Plato và Aristotle',
   'Sartre nói gì về tự do?',
-  'So sánh Lão Tử và Khổng Tử',
-  'Nhị nguyên tâm-thể của Descartes',
-  'Tồn tại có trước bản chất nghĩa là gì?'
+  'Khổng Tử và Nho giáo'
 ];
