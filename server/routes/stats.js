@@ -4,14 +4,44 @@ import User from '../models/User.js';
 import Philosopher from '../models/Philosopher.js';
 import Concept from '../models/Concept.js';
 import QuizResult from '../models/QuizResult.js';
+import PageView from '../models/PageView.js';
+import { optionalAuth } from '../middleware/auth.js';
 import { PHILOSOPHERS, SCHOOLS_DETAIL, TIMELINE } from '../data/philosophyKnowledge.js';
 
 const router = Router();
 
+// --- Track page view (public, no auth required) ---
+router.post('/track', optionalAuth, async (req, res) => {
+  try {
+    const { page, visitorId, referrer } = req.body;
+    if (!page || !visitorId) return res.status(400).json({ error: 'page and visitorId required' });
+
+    await PageView.create({
+      visitorId,
+      page,
+      referrer: referrer || '',
+      userAgent: req.headers['user-agent'] || '',
+      user: req.user?._id || null,
+    });
+
+    res.json({ ok: true });
+  } catch (err) {
+    // Non-critical — don't fail the page load
+    res.json({ ok: true });
+  }
+});
+
 // --- Overview: counts from DB + knowledge base ---
 router.get('/overview', async (req, res) => {
   try {
-    const [userCount, messageCount, totalSessions, philosopherCount, conceptCount] = await Promise.all([
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    const [userCount, messageCount, totalSessions, philosopherCount, conceptCount,
+           totalPageViews, todayPageViews, weekPageViews, monthPageViews,
+           uniqueVisitorsTotal, uniqueVisitorsToday, uniqueVisitorsWeek] = await Promise.all([
       User.countDocuments(),
       ChatMessage.countDocuments({ role: 'user' }),
       User.aggregate([
@@ -19,7 +49,15 @@ router.get('/overview', async (req, res) => {
         { $group: { _id: null, total: { $sum: '$n' } } }
       ]).then(r => r[0]?.total || 0),
       Philosopher.countDocuments(),
-      Concept.countDocuments()
+      Concept.countDocuments(),
+      // PageView stats
+      PageView.countDocuments(),
+      PageView.countDocuments({ createdAt: { $gte: todayStart } }),
+      PageView.countDocuments({ createdAt: { $gte: weekAgo } }),
+      PageView.countDocuments({ createdAt: { $gte: monthAgo } }),
+      PageView.distinct('visitorId').then(ids => ids.length),
+      PageView.distinct('visitorId', { createdAt: { $gte: todayStart } }).then(ids => ids.length),
+      PageView.distinct('visitorId', { createdAt: { $gte: weekAgo } }).then(ids => ids.length),
     ]);
 
     // Count from static knowledge
@@ -43,6 +81,14 @@ router.get('/overview', async (req, res) => {
       totalQuotes,
       totalConcepts,
       totalWorks,
+      // Visitor tracking
+      totalPageViews,
+      todayPageViews,
+      weekPageViews,
+      monthPageViews,
+      uniqueVisitorsTotal,
+      uniqueVisitorsToday,
+      uniqueVisitorsWeek,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -246,6 +292,49 @@ router.get('/engagement', async (req, res) => {
       activeWeek,
       avgVisits,
       topChatters: topChatters.map(c => ({ name: c.name || 'Ẩn danh', avatar: c.avatar || '', count: c.count })),
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Visitor activity over time (last 30 days) ---
+router.get('/visitor-activity', async (req, res) => {
+  try {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const activity = await PageView.aggregate([
+      { $match: { createdAt: { $gte: thirtyDaysAgo } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          views: { $sum: 1 },
+          visitors: { $addToSet: '$visitorId' }
+        }
+      },
+      { $project: { _id: 1, views: 1, visitors: { $size: '$visitors' } } },
+      { $sort: { _id: 1 } }
+    ]);
+    res.json({
+      activity: activity.map(a => ({ date: a._id, views: a.views, visitors: a.visitors }))
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Top pages ---
+router.get('/top-pages', async (req, res) => {
+  try {
+    const pages = await PageView.aggregate([
+      { $group: { _id: '$page', views: { $sum: 1 }, visitors: { $addToSet: '$visitorId' } } },
+      { $project: { _id: 1, views: 1, visitors: { $size: '$visitors' } } },
+      { $sort: { views: -1 } },
+      { $limit: 10 }
+    ]);
+    res.json({
+      pages: pages.map(p => ({ page: p._id, views: p.views, visitors: p.visitors }))
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
