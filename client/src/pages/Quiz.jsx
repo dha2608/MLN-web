@@ -49,7 +49,7 @@ export default function Quiz() {
       <div className="quiz-header stagger-1">
         <span className="quiz-icon" aria-hidden="true">?</span>
         <h1 className="page-title">Bạn thuộc trường phái nào?</h1>
-        <p className="page-desc">Trắc nghiệm ngắn dựa trên tư tưởng triết học. Chọn câu trả lời gần với quan điểm của bạn.</p>
+        <p className="page-desc">Trắc nghiệm ngắn dựa trên tư tưởng kinh tế chính trị và triết học. Chọn câu trả lời gần với quan điểm của bạn.</p>
       </div>
 
       {!result ? (
@@ -109,7 +109,7 @@ export default function Quiz() {
           <p className="quiz-result-desc">{result.description}</p>
           <hr className="divider" />
           <div className="quiz-result-actions">
-            <Link to="/triet-gia" className="btn btn-primary">Khám phá triết gia</Link>
+            <Link to="/triet-gia" className="btn btn-primary">Khám phá nhà tư tưởng</Link>
             <button type="button" className="btn btn-outline" onClick={() => { setResult(null); setAnswers({}); }}>Làm lại</button>
           </div>
         </div>

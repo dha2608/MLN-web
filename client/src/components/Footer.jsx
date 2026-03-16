@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import { quote as quoteApi } from '../api';
 
 const PHILOSOPHY_FACTS = [
+  'Marx viết bộ "Tư bản" trong gần 20 năm, phần lớn tại thư viện Bảo tàng Anh.',
+  'Engels tự học hơn 20 ngôn ngữ và có thể viết thư bằng tiếng Nga, Ý, Tây Ban Nha.',
+  'Lenin đọc trung bình 500 trang mỗi ngày trong thời gian bị lưu đày ở Siberia.',
+  'Bộ "Tư bản" của Marx ban đầu dự kiến 6 tập nhưng chỉ 1 tập được xuất bản khi ông còn sống.',
+  'Engels viết "Tình cảnh giai cấp công nhân Anh" khi mới 24 tuổi.',
+  'Marx và Engels viết "Tuyên ngôn Đảng Cộng sản" chỉ trong 6 tuần.',
+  '"Tuyên ngôn Đảng Cộng sản" (1848) được dịch ra hơn 200 ngôn ngữ trên thế giới.',
+  'Lenin viết "Chủ nghĩa đế quốc" chỉ trong vài tháng tại Zurich năm 1916.',
   'Socrates không viết bất kỳ tác phẩm nào — toàn bộ tư tưởng được truyền qua miệng.',
   'Plato sáng lập Học viện Athens — trường đại học đầu tiên của phương Tây.',
-  'Aristotle là thầy dạy của Alexander Đại đế khi ông mới 13 tuổi.',
   'Kant sống cả đời ở Königsberg và chưa bao giờ rời thành phố quá 80km.',
   'Marcus Aurelius viết Suy ngẫm cho chính mình, không có ý xuất bản.',
-  'Nietzsche sáng tác Zarathustra chỉ trong 10 ngày cho mỗi phần.',
   'Khổng Tử có hơn 3.000 đệ tử, trong đó 72 người thông thạo lục nghệ.',
   'Từ "triết học" (philosophy) có nghĩa gốc Hy Lạp là "tình yêu trí tuệ".',
-  'Aristotle đặt nền móng cho hơn 20 lĩnh vực khoa học khác nhau.',
-  'Học viện Athens của Plato tồn tại gần 900 năm (387 TCN – 529 SCN).',
-  'Lão Tử theo truyền thuyết đã cưỡi trâu đi về phía tây và viết Đạo Đức Kinh trước khi biến mất.',
-  'Đạo Đức Kinh chỉ có khoảng 5.000 chữ Hán nhưng là một trong những sách được dịch nhiều nhất thế giới.',
   'Descartes nảy ra ý tưởng "Cogito ergo sum" khi nằm trong phòng ấm vào một buổi sáng mùa đông.',
-  'Sartre từ chối giải Nobel Văn học năm 1964 — một trong rất ít người từ chối giải thưởng này.',
-  'Descartes phát minh hệ tọa độ Descartes khi quan sát một con ruồi bay trên trần nhà.'
 ];
 
 export default function Footer() {
@@ -50,14 +50,14 @@ export default function Footer() {
           {/* Col 1: Brand */}
           <div className="footer-col footer-col-brand">
             <Link to="/" className="footer-logo">
-              <span className="footer-logo-icon" aria-hidden="true">{'\u03A6'}</span>
+              <span className="footer-logo-icon" aria-hidden="true">{'\u2692'}</span>
               <div className="footer-logo-text-wrap">
-                <span className="footer-logo-text">Triết học</span>
-                <span className="footer-logo-sub">Tư duy & Khám phá</span>
+                <span className="footer-logo-text">KTCT Mác-Lênin</span>
+                <span className="footer-logo-sub">Kinh tế chính trị & Triết học</span>
               </div>
             </Link>
             <p className="footer-desc">
-              Nền tảng học triết học tương tác dành cho sinh viên MLN122. Khám phá tri thức từ Đông sang Tây, từ cổ đại đến hiện đại.
+              Nền tảng học kinh tế chính trị và triết học tương tác dành cho sinh viên MLN122. Khám phá tư tưởng Marx, Engels, Lenin và các trường phái triết học.
             </p>
             <div className="footer-fact">
               <span className="footer-fact-label">Bạn có biết?</span>
@@ -70,7 +70,7 @@ export default function Footer() {
             <span className="footer-col-title">Khám phá</span>
             <nav className="footer-nav-links" aria-label="Footer navigation">
               <Link to="/">Trang chủ</Link>
-              <Link to="/triet-gia">Triết gia</Link>
+              <Link to="/triet-gia">Nhà tư tưởng</Link>
               <Link to="/khai-niem">Khái niệm</Link>
               <Link to="/trac-nghiem">Trắc nghiệm</Link>
               <Link to="/so-sanh">So sánh tư tưởng</Link>
@@ -88,14 +88,14 @@ export default function Footer() {
               </Link>
               <Link to="/so-sanh">
                 <span className="footer-link-icon" aria-hidden="true">{'\u21C4'}</span>
-                So sánh triết gia
+                So sánh nhà tư tưởng
               </Link>
               <Link to="/thong-ke">
                 <span className="footer-link-icon" aria-hidden="true">#</span>
                 Thống kê tương tác
               </Link>
               <Link to="/dashboard">
-                <span className="footer-link-icon" aria-hidden="true">{'\u03A6'}</span>
+                <span className="footer-link-icon" aria-hidden="true">{'\u2692'}</span>
                 Dashboard cá nhân
               </Link>
             </nav>
@@ -107,15 +107,15 @@ export default function Footer() {
             <div className="footer-info-list">
               <div className="footer-info-item">
                 <span className="footer-info-label">Môn học</span>
-                <span className="footer-info-value">MLN122 — Triết học Mác-Lênin</span>
+                <span className="footer-info-value">MLN122 — KTCT Mác-Lênin</span>
               </div>
               <div className="footer-info-item">
-                <span className="footer-info-label">Triết gia</span>
-                <span className="footer-info-value">10 triết gia lớn</span>
+                <span className="footer-info-label">Nhà tư tưởng</span>
+                <span className="footer-info-value">13 nhà tư tưởng</span>
               </div>
               <div className="footer-info-item">
                 <span className="footer-info-label">Trường phái</span>
-                <span className="footer-info-value">7 trường phái chính</span>
+                <span className="footer-info-value">9 trường phái chính</span>
               </div>
               <div className="footer-info-item">
                 <span className="footer-info-label">Dữ liệu</span>
@@ -136,7 +136,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="footer-bottom">
           <div className="footer-bottom-left">
-            <p className="footer-copy">&copy; {new Date().getFullYear()} Triết học — Tư duy & Khám phá</p>
+            <p className="footer-copy">&copy; {new Date().getFullYear()} KTCT Mác-Lênin — Kinh tế chính trị & Triết học</p>
             <p className="footer-copy-sub">Dữ liệu chỉ dùng cho mục đích giáo dục và phân tích nội bộ.</p>
           </div>
           <div className="footer-bottom-right">

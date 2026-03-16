@@ -2,6 +2,8 @@ import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { philosophers as api } from '../api';
 
+const KTCT_SCHOOLS = ['Chủ nghĩa Mác (Marxism)', 'Chủ nghĩa Mác-Lênin'];
+
 export default function Philosophers() {
   const [list, setList] = useState([]);
   const [search, setSearch] = useState('');
@@ -35,9 +37,13 @@ export default function Philosophers() {
     );
   }, [debouncedSearch, list]);
 
+  // Split into KTCT and others
+  const ktctFiltered = useMemo(() => filtered.filter(p => KTCT_SCHOOLS.includes(p.school)), [filtered]);
+  const otherFiltered = useMemo(() => filtered.filter(p => !KTCT_SCHOOLS.includes(p.school)), [filtered]);
+
   if (loading) return (
     <div className="page">
-      <div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải triết gia...</span></div>
+       <div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải...</span></div>
     </div>
   );
 
@@ -45,10 +51,10 @@ export default function Philosophers() {
     <div className="page phil-page">
       <div className="phil-header stagger-1">
         <div>
-          <h1 className="page-title">Triết gia</h1>
-          <p className="page-desc">Chọn một triết gia để xem tiểu sử và tư tưởng chính.</p>
+          <h1 className="page-title">Nhà tư tưởng</h1>
+          <p className="page-desc">Chọn một nhà tư tưởng để xem tiểu sử và tư tưởng chính.</p>
         </div>
-        <span className="phil-count">{list.length} triết gia</span>
+        <span className="phil-count">{list.length} nhà tư tưởng</span>
       </div>
 
       {/* Search */}
@@ -62,7 +68,7 @@ export default function Philosophers() {
           onChange={handleSearch}
           placeholder="Tìm theo tên, trường phái..."
           className="phil-search-input"
-          aria-label="Tìm kiếm triết gia"
+           aria-label="Tìm kiếm nhà tư tưởng"
         />
         {search && (
           <button type="button" className="phil-search-clear" onClick={() => setSearch('')} aria-label="Xóa tìm kiếm">
@@ -73,30 +79,71 @@ export default function Philosophers() {
 
       {filtered.length === 0 ? (
         <div className="empty-state stagger-3">
-          <div className="empty-icon" aria-hidden="true">{'\u03A6'}</div>
-          <p>Không tìm thấy triết gia nào phù hợp.</p>
+          <div className="empty-icon" aria-hidden="true">{'\u2692'}</div>
+          <p>Không tìm thấy nhà tư tưởng nào phù hợp.</p>
         </div>
       ) : (
-        <div className="phil-grid">
-          {filtered.map((p, i) => (
-            <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`phil-card stagger-${(i % 7) + 1}`}>
-              <div className="phil-img-wrap">
-                {p.imageUrl ? (
-                  <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
-                ) : (
-                  <div className="phil-placeholder" aria-hidden="true">{p.name.charAt(0)}</div>
-                )}
-                <div className="phil-img-overlay" />
+        <>
+          {/* KTCT - Phần chính */}
+          {ktctFiltered.length > 0 && (
+            <div className="phil-section">
+              <div className="phil-section-header">
+                <span className="phil-section-badge">Phần chính</span>
+                <h2 className="phil-section-title">Kinh tế chính trị Mác-Lênin</h2>
               </div>
-              <div className="phil-info">
-                <h3>{p.name}</h3>
-                {p.nameVi && p.nameVi !== p.name && <span className="phil-name-vi">{p.nameVi}</span>}
-                <span className="phil-dates">{p.birthDeath}</span>
-                <span className="badge badge-school">{p.school}</span>
+              <div className="phil-grid">
+                {ktctFiltered.map((p, i) => (
+                  <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`phil-card phil-card--ktct stagger-${(i % 7) + 1}`}>
+                    <div className="phil-img-wrap">
+                      {p.imageUrl ? (
+                        <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
+                      ) : (
+                        <div className="phil-placeholder" aria-hidden="true">{p.name.charAt(0)}</div>
+                      )}
+                      <div className="phil-img-overlay" />
+                    </div>
+                    <div className="phil-info">
+                      <h3>{p.name}</h3>
+                      {p.nameVi && p.nameVi !== p.name && <span className="phil-name-vi">{p.nameVi}</span>}
+                      <span className="phil-dates">{p.birthDeath}</span>
+                      <span className="badge badge-school">{p.school}</span>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          )}
+
+          {/* Triết học - Mở rộng */}
+          {otherFiltered.length > 0 && (
+            <div className="phil-section phil-section--ext">
+              <div className="phil-section-header">
+                <span className="phil-section-badge phil-section-badge--ext">Mở rộng</span>
+                <h2 className="phil-section-title">Triết học</h2>
+              </div>
+              <div className="phil-grid">
+                {otherFiltered.map((p, i) => (
+                  <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`phil-card stagger-${(i % 7) + 1}`}>
+                    <div className="phil-img-wrap">
+                      {p.imageUrl ? (
+                        <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
+                      ) : (
+                        <div className="phil-placeholder" aria-hidden="true">{p.name.charAt(0)}</div>
+                      )}
+                      <div className="phil-img-overlay" />
+                    </div>
+                    <div className="phil-info">
+                      <h3>{p.name}</h3>
+                      {p.nameVi && p.nameVi !== p.name && <span className="phil-name-vi">{p.nameVi}</span>}
+                      <span className="phil-dates">{p.birthDeath}</span>
+                      <span className="badge badge-school">{p.school}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       <style>{`
@@ -253,6 +300,38 @@ export default function Philosophers() {
         .phil-info .badge {
           align-self: flex-start;
           margin-top: 0.15rem;
+        }
+
+        /* Sections */
+        .phil-section { margin-bottom: 2.5rem; }
+        .phil-section--ext { margin-bottom: 1rem; }
+        .phil-section-header { margin-bottom: 1.25rem; }
+        .phil-section-badge {
+          display: inline-block;
+          padding: 0.2rem 0.6rem;
+          background: #c53030;
+          color: white;
+          border-radius: 99px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+          margin-bottom: 0.35rem;
+        }
+        .phil-section-badge--ext { background: var(--accent); }
+        .phil-section-title {
+          margin: 0;
+          font-size: 1.3rem;
+          font-weight: 600;
+          font-family: var(--font-serif);
+          color: var(--text);
+        }
+        .phil-card--ktct {
+          border-color: rgba(197,48,48,0.2);
+        }
+        .phil-card--ktct:hover {
+          border-color: #c53030;
+          box-shadow: 0 8px 24px rgba(197,48,48,0.15);
         }
 
         @media (max-width: 480px) {

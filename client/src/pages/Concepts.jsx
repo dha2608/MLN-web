@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { concepts as api } from '../api';
 
 const CONCEPT_ICONS = {
+  'Kinh tế chính trị': '\u2692',
   'Nhận thức luận': '\u2318',
   'Siêu hình học': '\u2734',
   'Đạo đức học': '\u2261',
@@ -10,6 +11,10 @@ const CONCEPT_ICONS = {
   'Triết học chính trị': '\u2694',
   'Mỹ học': '\u2605',
 };
+
+function isKtctConcept(c) {
+  return (c.school || '').startsWith('Kinh tế chính trị');
+}
 
 export default function Concepts() {
   const [list, setList] = useState([]);
@@ -22,6 +27,9 @@ export default function Concepts() {
     }).catch(() => setLoading(false));
   }, []);
 
+  const ktctList = list.filter(isKtctConcept);
+  const otherList = list.filter(c => !isKtctConcept(c));
+
   if (loading) return (
     <div className="page page--narrow">
       <div className="loading-wrap"><div className="loading-spinner" aria-label="Đang tải" /><span className="loading-text">Đang tải khái niệm...</span></div>
@@ -31,9 +39,9 @@ export default function Concepts() {
   return (
     <div className="page concepts-page">
       <div className="concepts-header stagger-1">
-        <span className="concepts-icon" aria-hidden="true">{'\u2234'}</span>
-        <h1 className="page-title">Khái niệm triết học</h1>
-        <p className="page-desc">Các khái niệm nền tảng trong triết học phương Đông và phương Tây.</p>
+        <span className="concepts-icon" aria-hidden="true">{'\u2692'}</span>
+        <h1 className="page-title">Khái niệm</h1>
+        <p className="page-desc">Các khái niệm nền tảng trong kinh tế chính trị Mác-Lênin và triết học.</p>
       </div>
 
       {list.length === 0 ? (
@@ -42,23 +50,59 @@ export default function Concepts() {
           <p>Chưa có khái niệm nào.</p>
         </div>
       ) : (
-        <div className="concepts-grid">
-          {list.map((c, i) => (
-            <Link key={c._id} to={`/khai-niem/${c.slug}`} className={`concept-card stagger-${(i % 6) + 1}`}>
-              <div className="concept-card-icon" aria-hidden="true">
-                {CONCEPT_ICONS[c.school] || '\u2022'}
+        <>
+          {/* KTCT - Phần chính */}
+          {ktctList.length > 0 && (
+            <div className="concepts-section">
+              <div className="concepts-section-header">
+                <span className="concepts-section-badge">Phần chính</span>
+                <h2 className="concepts-section-title">Kinh tế chính trị Mác-Lênin</h2>
               </div>
-              <div className="concept-card-body">
-                <h3>{c.title}</h3>
-                {c.school && <span className="badge badge-school">{c.school}</span>}
-                {c.description && (
-                  <p className="concept-card-desc">{c.description.slice(0, 100)}{c.description.length > 100 ? '...' : ''}</p>
-                )}
+              <div className="concepts-grid">
+                {ktctList.map((c, i) => (
+                  <Link key={c._id} to={`/khai-niem/${c.slug}`} className={`concept-card concept-card--ktct stagger-${(i % 6) + 1}`}>
+                    <div className="concept-card-icon" aria-hidden="true">{'\u2692'}</div>
+                    <div className="concept-card-body">
+                      <h3>{c.title}</h3>
+                      {c.school && <span className="badge badge-school">{c.school}</span>}
+                      {c.description && (
+                        <p className="concept-card-desc">{c.description.slice(0, 100)}{c.description.length > 100 ? '...' : ''}</p>
+                      )}
+                    </div>
+                    <span className="concept-card-arrow" aria-hidden="true">&rarr;</span>
+                  </Link>
+                ))}
               </div>
-              <span className="concept-card-arrow" aria-hidden="true">&rarr;</span>
-            </Link>
-          ))}
-        </div>
+            </div>
+          )}
+
+          {/* Triết học - Mở rộng */}
+          {otherList.length > 0 && (
+            <div className="concepts-section concepts-section--ext">
+              <div className="concepts-section-header">
+                <span className="concepts-section-badge concepts-section-badge--ext">Mở rộng</span>
+                <h2 className="concepts-section-title">Triết học</h2>
+              </div>
+              <div className="concepts-grid">
+                {otherList.map((c, i) => (
+                  <Link key={c._id} to={`/khai-niem/${c.slug}`} className={`concept-card stagger-${(i % 6) + 1}`}>
+                    <div className="concept-card-icon" aria-hidden="true">
+                      {CONCEPT_ICONS[c.school] || '\u2022'}
+                    </div>
+                    <div className="concept-card-body">
+                      <h3>{c.title}</h3>
+                      {c.school && <span className="badge badge-school">{c.school}</span>}
+                      {c.description && (
+                        <p className="concept-card-desc">{c.description.slice(0, 100)}{c.description.length > 100 ? '...' : ''}</p>
+                      )}
+                    </div>
+                    <span className="concept-card-arrow" aria-hidden="true">&rarr;</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       <style>{`
@@ -147,6 +191,38 @@ export default function Concepts() {
           flex-shrink: 0;
           align-self: center;
           font-size: 1.1rem;
+        }
+
+        /* Sections */
+        .concepts-section { margin-bottom: 2.5rem; }
+        .concepts-section--ext { margin-bottom: 1rem; }
+        .concepts-section-header { margin-bottom: 1.25rem; }
+        .concepts-section-badge {
+          display: inline-block;
+          padding: 0.2rem 0.6rem;
+          background: #c53030;
+          color: white;
+          border-radius: 99px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+          margin-bottom: 0.35rem;
+        }
+        .concepts-section-badge--ext { background: var(--accent); }
+        .concepts-section-title {
+          margin: 0;
+          font-size: 1.3rem;
+          font-weight: 600;
+          font-family: var(--font-serif);
+          color: var(--text);
+        }
+        .concept-card--ktct {
+          border-color: rgba(197,48,48,0.2);
+        }
+        .concept-card--ktct:hover {
+          border-color: #c53030;
+          box-shadow: 0 6px 20px rgba(197,48,48,0.12);
         }
 
         @media (max-width: 480px) {

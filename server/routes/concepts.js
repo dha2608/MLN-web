@@ -5,6 +5,18 @@ import { CONCEPTS } from '../data/philosophyKnowledge.js';
 const router = Router();
 
 const CONCEPT_TITLES = {
+  // Kinh tế chính trị Mác-Lênin
+  'giá trị thặng dư': 'Giá trị thặng dư',
+  'đấu tranh giai cấp': 'Đấu tranh giai cấp',
+  'duy vật biện chứng': 'Duy vật biện chứng',
+  'duy vật lịch sử': 'Duy vật lịch sử',
+  'tư liệu sản xuất': 'Tư liệu sản xuất',
+  'hàng hóa': 'Hàng hóa',
+  'chủ nghĩa đế quốc': 'Chủ nghĩa đế quốc',
+  'chuyên chính vô sản': 'Chuyên chính vô sản',
+  'tha hóa lao động': 'Tha hóa lao động',
+  'phép biện chứng': 'Phép biện chứng',
+  // Triết học
   'ý niệm': 'Thuyết ý niệm',
   'đối thoại': 'Phương pháp đối thoại',
   'logic': 'Logic học',
@@ -24,6 +36,18 @@ const CONCEPT_TITLES = {
 };
 
 const CONCEPT_SCHOOLS = {
+  // Kinh tế chính trị Mác-Lênin
+  'giá trị thặng dư': 'Kinh tế chính trị — Karl Marx',
+  'đấu tranh giai cấp': 'Kinh tế chính trị — Karl Marx',
+  'duy vật biện chứng': 'Kinh tế chính trị — Karl Marx & Friedrich Engels',
+  'duy vật lịch sử': 'Kinh tế chính trị — Karl Marx',
+  'tư liệu sản xuất': 'Kinh tế chính trị — Karl Marx',
+  'hàng hóa': 'Kinh tế chính trị — Karl Marx',
+  'chủ nghĩa đế quốc': 'Kinh tế chính trị — V.I. Lenin',
+  'chuyên chính vô sản': 'Kinh tế chính trị — V.I. Lenin',
+  'tha hóa lao động': 'Kinh tế chính trị — Karl Marx',
+  'phép biện chứng': 'Kinh tế chính trị — Karl Marx & Friedrich Engels',
+  // Triết học
   'ý niệm': 'Triết học Hy Lạp cổ đại — Plato',
   'đối thoại': 'Triết học Hy Lạp cổ đại — Socrates',
   'logic': 'Triết học Hy Lạp cổ đại — Aristotle',

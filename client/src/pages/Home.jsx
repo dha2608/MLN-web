@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import { quote, philosophers as philApi, schools as schoolsApi, timeline as timelineApi } from '../api';
 
 const FEATURES = [
-  { to: '/triet-gia', title: 'Triết gia', desc: 'Socrates, Plato, Aristotle, Kant, Nietzsche, Marcus Aurelius, Khổng Tử, Lão Tử, Descartes, Sartre...', icon: '\u03A6' },
-  { to: '/khai-niem', title: 'Khái niệm', desc: 'Ý niệm, đối thoại, logic, bổn phận, siêu nhân, trung đạo, cogito, vô vi, đạo...', icon: '\u2234' },
-  { to: '/trac-nghiem', title: 'Trắc nghiệm', desc: '"Bạn thuộc trường phái nào?" — khám phá tính cách triết học.', icon: '?' },
-  { to: '/so-sanh', title: 'So sánh tư tưởng', desc: 'Chọn hai triết gia để so sánh quan điểm.', icon: '\u21C4' },
-  { to: '/thong-ke', title: 'Thống kê thú vị', desc: 'Triết gia được hỏi nhiều nhất, chủ đề hot...', icon: '#' },
+  { to: '/triet-gia', title: 'Nhà tư tưởng', desc: 'Marx, Engels, Lenin, Socrates, Plato, Aristotle, Kant, Nietzsche, Khổng Tử, Lão Tử...', icon: '\u2692' },
+  { to: '/khai-niem', title: 'Khái niệm', desc: 'Giá trị thặng dư, đấu tranh giai cấp, duy vật biện chứng, ý niệm, bổn phận, vô vi...', icon: '\u2234' },
+  { to: '/trac-nghiem', title: 'Trắc nghiệm', desc: '"Bạn thuộc trường phái nào?" — khám phá tính cách tư tưởng.', icon: '?' },
+  { to: '/so-sanh', title: 'So sánh tư tưởng', desc: 'Chọn hai nhà tư tưởng để so sánh quan điểm.', icon: '\u21C4' },
+  { to: '/thong-ke', title: 'Thống kê thú vị', desc: 'Nhà tư tưởng được hỏi nhiều nhất, chủ đề hot...', icon: '#' },
 ];
 
-const PHILOSOPHER_NAMES = ['Socrates', 'Plato', 'Aristotle', 'Kant', 'Nietzsche', 'Marcus Aurelius', 'Khổng Tử', 'Lão Tử', 'Descartes', 'Sartre'];
+const PHILOSOPHER_NAMES = ['Karl Marx', 'Friedrich Engels', 'V.I. Lenin', 'Socrates', 'Plato', 'Aristotle', 'Kant', 'Nietzsche', 'Marcus Aurelius', 'Khổng Tử', 'Lão Tử', 'Descartes', 'Sartre'];
 
 const SCHOOL_ICONS = {
+  'Chủ nghĩa Mác (Marxism)': '\u2692',
+  'Chủ nghĩa Mác-Lênin': '\u2605',
   'Triết học Hy Lạp cổ đại': '\u03A6',
   'Khắc kỷ (Stoicism)': '\u2694',
   'Khai sáng Đức': '\u2261',
@@ -23,9 +25,12 @@ const SCHOOL_ICONS = {
   'Chủ nghĩa Hiện sinh': '\u221E',
 };
 
+const KTCT_SCHOOLS = ['Chủ nghĩa Mác (Marxism)', 'Chủ nghĩa Mác-Lênin'];
+
 export default function Home({ user }) {
   const [dailyQuote, setDailyQuote] = useState(null);
-  const [philosophers, setPhilosophers] = useState([]);
+  const [ktctPhilosophers, setKtctPhilosophers] = useState([]);
+  const [otherPhilosophers, setOtherPhilosophers] = useState([]);
   const [schoolsList, setSchoolsList] = useState([]);
   const [timelineData, setTimelineData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +43,9 @@ export default function Home({ user }) {
       timelineApi.list().catch(() => ({ timeline: [] })),
     ]).then(([quoteRes, philRes, schoolRes, timelineRes]) => {
       setDailyQuote(quoteRes.quote);
-      setPhilosophers((philRes.philosophers || []).slice(0, 5));
+      const all = philRes.philosophers || [];
+      setKtctPhilosophers(all.filter(p => KTCT_SCHOOLS.includes(p.school)));
+      setOtherPhilosophers(all.filter(p => !KTCT_SCHOOLS.includes(p.school)));
       setSchoolsList(schoolRes.schools || []);
       setTimelineData(timelineRes.timeline || []);
       setLoading(false);
@@ -61,16 +68,16 @@ export default function Home({ user }) {
           <div className="hero-orb hero-orb-3" />
         </div>
         <div className="hero-inner">
-          <span className="hero-badge">Triết học hiện đại</span>
+          <span className="hero-badge">Kinh tế chính trị Mác-Lênin</span>
           <h1 className="hero-title">
-            Tư duy sâu sắc,<br />Khám phá bản thân
+            Kinh tế chính trị,<br />Nền tảng tư tưởng
           </h1>
           <p className="hero-subtitle">
-            Khám phá các triết gia vĩ đại, trường phái tư tưởng và khái niệm nền tảng. 
-            Chatbot của chúng tôi chỉ trả lời trong phạm vi triết học.
+            Khám phá kinh tế chính trị Mác-Lênin, các nhà tư tưởng vĩ đại và khái niệm nền tảng. 
+            Chatbot hỗ trợ học tập trong phạm vi kinh tế chính trị và triết học.
           </p>
           <div className="hero-actions">
-            <Link to="/triet-gia" className="btn btn-primary btn-lg">Khám phá triết gia</Link>
+            <Link to="/triet-gia" className="btn btn-primary btn-lg">Khám phá nhà tư tưởng</Link>
             <Link to="/trac-nghiem" className="btn btn-outline btn-lg">Bạn thuộc trường phái nào?</Link>
           </div>
           <div className="hero-names" aria-hidden="true">
@@ -84,12 +91,12 @@ export default function Home({ user }) {
       {/* Stats Strip */}
       <section className="home-stats-strip stagger-1">
         <div className="home-stat-item">
-          <span className="home-stat-num">10</span>
-          <span className="home-stat-label">Triết gia</span>
+          <span className="home-stat-num">13</span>
+          <span className="home-stat-label">Nhà tư tưởng</span>
         </div>
         <div className="home-stat-divider" />
         <div className="home-stat-item">
-          <span className="home-stat-num">7</span>
+          <span className="home-stat-num">9</span>
           <span className="home-stat-label">Trường phái</span>
         </div>
         <div className="home-stat-divider" />
@@ -120,16 +127,48 @@ export default function Home({ user }) {
         </section>
       )}
 
-      {/* Featured Philosophers */}
-      {philosophers.length > 0 && (
+      {/* KTCT - Phần chính */}
+      {ktctPhilosophers.length > 0 && (
         <section className="home-philosophers stagger-3">
           <div className="home-phil-header">
-            <h2 className="section-title">Triết gia nổi bật</h2>
+            <div>
+              <span className="home-section-badge">Phần chính</span>
+              <h2 className="section-title">Kinh tế chính trị Mác-Lênin</h2>
+            </div>
             <Link to="/triet-gia" className="btn btn-ghost btn-sm">Xem tất cả &rarr;</Link>
           </div>
           <div className="home-phil-grid">
-            {philosophers.map((p, i) => (
-              <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`home-phil-card stagger-${i + 3}`}>
+            {ktctPhilosophers.map((p, i) => (
+              <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`home-phil-card home-phil-card--ktct stagger-${i + 3}`}>
+                <div className="home-phil-avatar">
+                  {p.imageUrl ? (
+                    <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
+                  ) : (
+                    <span className="home-phil-initial" aria-hidden="true">{p.name.charAt(0)}</span>
+                  )}
+                </div>
+                <h3>{p.name}</h3>
+                <span className="home-phil-school">{p.school}</span>
+                <span className="home-phil-dates">{p.birthDeath}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Triết học mở rộng */}
+      {otherPhilosophers.length > 0 && (
+        <section className="home-philosophers home-philosophers--ext stagger-4">
+          <div className="home-phil-header">
+            <div>
+              <span className="home-section-badge home-section-badge--ext">Mở rộng</span>
+              <h2 className="section-title">Triết học</h2>
+            </div>
+            <Link to="/triet-gia" className="btn btn-ghost btn-sm">Xem tất cả &rarr;</Link>
+          </div>
+          <div className="home-phil-grid">
+            {otherPhilosophers.slice(0, 5).map((p, i) => (
+              <Link key={p._id} to={`/triet-gia/${p.slug}`} className={`home-phil-card stagger-${i + 4}`}>
                 <div className="home-phil-avatar">
                   {p.imageUrl ? (
                     <img src={p.imageUrl} alt={p.imageAlt || p.name} loading="lazy" />
@@ -149,8 +188,8 @@ export default function Home({ user }) {
       {/* Schools Section */}
       {schoolsList.length > 0 && (
         <section className="home-schools stagger-4">
-          <h2 className="section-title">Các trường phái triết học</h2>
-          <p className="home-schools-desc">Bảy trường phái tư tưởng chính được trình bày trong hệ thống.</p>
+          <h2 className="section-title">Các trường phái tư tưởng</h2>
+          <p className="home-schools-desc">Các trường phái tư tưởng chính được trình bày trong hệ thống, lấy kinh tế chính trị Mác-Lênin làm chủ đạo.</p>
           <div className="home-schools-grid">
             {schoolsList.map((s, i) => (
               <div key={s.name} className={`home-school-card stagger-${i + 4}`}>
@@ -181,8 +220,8 @@ export default function Home({ user }) {
       {/* Timeline */}
       {timelineData.length > 0 && (
         <section className="home-timeline stagger-5">
-          <h2 className="section-title">Dòng thời gian triết học</h2>
-          <p className="home-timeline-desc">Những mốc quan trọng trong lịch sử tư tưởng nhân loại.</p>
+          <h2 className="section-title">Dòng thời gian</h2>
+          <p className="home-timeline-desc">Những mốc quan trọng trong lịch sử tư tưởng và kinh tế chính trị.</p>
           <div className="timeline-container">
             <div className="timeline-line" aria-hidden="true" />
             {timelineData.map((item, i) => (
@@ -221,8 +260,8 @@ export default function Home({ user }) {
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
           <div>
-            <h3>Chatbot Triết học</h3>
-            <p>Có thắc mắc? Hãy hỏi trợ lý triết học ở góc phải màn hình. Chatbot chỉ trả lời trong phạm vi triết học.</p>
+            <h3>Chatbot Kinh tế chính trị</h3>
+            <p>Có thắc mắc? Hãy hỏi trợ lý ở góc phải màn hình. Chatbot trả lời trong phạm vi kinh tế chính trị và triết học.</p>
           </div>
         </div>
       </section>
@@ -404,16 +443,32 @@ export default function Home({ user }) {
 
         /* ---- Featured Philosophers ---- */
         .home-philosophers { margin-bottom: 3.5rem; }
+        .home-philosophers--ext { margin-bottom: 2.5rem; }
+        .home-section-badge {
+          display: inline-block;
+          padding: 0.2rem 0.6rem;
+          background: #c53030;
+          color: white;
+          border-radius: 99px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+          margin-bottom: 0.4rem;
+        }
+        .home-section-badge--ext {
+          background: var(--accent);
+        }
         .home-phil-header {
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           justify-content: space-between;
           margin-bottom: 1.5rem;
         }
         .home-phil-header .section-title { margin-bottom: 0; }
         .home-phil-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
           gap: 1.25rem;
         }
         .home-phil-card {
@@ -434,6 +489,14 @@ export default function Home({ user }) {
           box-shadow: var(--shadow-md);
           transform: translateY(-4px);
           text-decoration: none;
+        }
+        .home-phil-card--ktct {
+          border-color: rgba(197,48,48,0.2);
+          background: linear-gradient(135deg, #fff5f5 0%, var(--bg-card) 100%);
+        }
+        .home-phil-card--ktct:hover {
+          border-color: #c53030;
+          box-shadow: 0 8px 24px rgba(197,48,48,0.15);
         }
         .home-phil-avatar {
           width: 72px;

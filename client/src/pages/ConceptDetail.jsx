@@ -53,10 +53,10 @@ export default function ConceptDetail({ user }) {
         {/* CTA */}
         <div className="cd-cta stagger-3">
           <div className="cd-cta-inner">
-            <p>Muốn tìm hiểu thêm? Hãy hỏi chatbot triết học bên góc phải.</p>
+            <p>Muốn tìm hiểu thêm? Hãy hỏi chatbot KTCT bên góc phải.</p>
             <div className="cd-cta-actions">
               <Link to="/khai-niem" className="btn btn-outline btn-sm">Xem khái niệm khác</Link>
-              <Link to="/triet-gia" className="btn btn-ghost btn-sm">Khám phá triết gia</Link>
+              <Link to="/triet-gia" className="btn btn-ghost btn-sm">Khám phá nhà tư tưởng</Link>
             </div>
           </div>
         </div>

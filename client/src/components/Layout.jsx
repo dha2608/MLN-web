@@ -26,7 +26,7 @@ export default function Layout({ user, loading, onLogout }) {
 
   const navItems = [
     { to: '/', label: 'Trang chủ' },
-    { to: '/triet-gia', label: 'Triết gia' },
+    { to: '/triet-gia', label: 'Nhà tư tưởng' },
     { to: '/khai-niem', label: 'Khái niệm' },
     { to: '/bai-hoc', label: 'Bài học' },
     { to: '/trac-nghiem', label: 'Trắc nghiệm' },
@@ -82,10 +82,10 @@ export default function Layout({ user, loading, onLogout }) {
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
-            <span className="logo-icon" aria-hidden="true">{'\u03A6'}</span>
+            <span className="logo-icon" aria-hidden="true">{'\u2692'}</span>
             <div className="logo-text-wrap">
-              <span className="logo-text">Triết học</span>
-              <span className="logo-sub">Tư duy & Khám phá</span>
+              <span className="logo-text">KTCT Mác-Lênin</span>
+              <span className="logo-sub">Kinh tế chính trị & Triết học</span>
             </div>
           </Link>
           <nav className="nav nav-desktop">{navLinks}</nav>

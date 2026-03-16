@@ -23,7 +23,7 @@ export default function PhilosopherDetail({ user }) {
     <div className="page page--narrow">
       <div className="empty-state">
         <div className="empty-icon" aria-hidden="true">?</div>
-        <p>Không tìm thấy triết gia này.</p>
+        <p>Không tìm thấy nhà tư tưởng này.</p>
         <Link to="/triet-gia" className="btn btn-secondary btn-sm">Quay lại danh sách</Link>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default function PhilosopherDetail({ user }) {
 
   return (
     <div className="page page--narrow pd-page">
-      <Link to="/triet-gia" className="back-link">&larr; Triết gia</Link>
+      <Link to="/triet-gia" className="back-link">&larr; Nhà tư tưởng</Link>
 
       <article className="pd-article">
         {/* Hero Header */}
@@ -185,10 +185,10 @@ export default function PhilosopherDetail({ user }) {
         {/* CTA */}
         <div className="pd-cta stagger-5">
           <div className="pd-cta-inner">
-            <p>Muốn tìm hiểu thêm? Hãy hỏi chatbot triết học bên góc phải.</p>
+            <p>Muốn tìm hiểu thêm? Hãy hỏi chatbot KTCT bên góc phải.</p>
             <div className="pd-cta-actions">
-              <Link to="/so-sanh" className="btn btn-outline btn-sm">So sánh với triết gia khác</Link>
-              <Link to="/triet-gia" className="btn btn-ghost btn-sm">Xem tất cả triết gia</Link>
+              <Link to="/so-sanh" className="btn btn-outline btn-sm">So sánh với nhà tư tưởng khác</Link>
+              <Link to="/triet-gia" className="btn btn-ghost btn-sm">Xem tất cả nhà tư tưởng</Link>
             </div>
           </div>
         </div>
